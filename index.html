@@ -3,6 +3,7 @@
     <!-- head -->
     <head>
         <title> Info </title>
+        <link rel="icon" type="image/x-icon" href="images/icon.png">
         <link rel="stylesheet" href="style.css"> 
     </head>
 
@@ -12,52 +13,88 @@
             <!-- left page -->
             <div class="left-page">
                 <img src="images/my_photo.JPG" alt="my photo" class="my-photo">
-                <h2> Yumeng He 何雨濛</h2>
-                <br>
-                master's student
+                <h2 class="my-name"> Yumeng He 何雨濛</h2>
+                Master's Student
                 <br>
                 University of Sourthern California
                 <br>
-                heyumeng@usc.edu
+                <a href= "mailto:heyumeng@usc.edu">heyumeng@usc.edu</a>
                 <br>
-                <a href="https://www.linkedin.com/in/yumeng-he/">LinkedIn</a>
+                <a href="https://www.linkedin.com/in/yumeng-he/" target="blank">LinkedIn</a>
                 <br>
-                <a href="https://github.com/YumengHe">Github</a>
+                <a href="https://github.com/YumengHe" target="blank">Github</a>
                 <br>
-                resume
+                <a href="resume.pdf" target="blank">Résumé</a>
+                <br>
+                <p class="latest-update"> Latest Update: Dec 27, 2024 </p>
             </div>
 
             <!-- right page -->
             <div class="right-page">
                 <h2> About Me</h2>
                 <p>
-                    I am currently pursuing a Master’s degree in Computer Science at the <a href="https://www.usc.edu/">University of Southern California</a>.
-                    Before enrolling at USC, I earned my Bachelor of Science from the <a href="https://www.utoronto.ca/">University of Toronto</a>, where I double-majored in Mathematics and Computer Science.
+                    I am a Master’s student in Computer Science at the <a href="https://www.usc.edu/">University of Southern California</a>.
+                    Prior to USC, I earned my Honours Bachelor of Science degree with High Distinction from the <a href="https://www.utoronto.ca/">University of Toronto</a>, where I double-majored in Mathematics and Computer Science.
+                    This dual background has fostered a strong foundation in math-based problem-solving and robust coding skills.
                 </p>
                 <h2> Research Interests </h2>
                 <p>
-                    I am generally interested in computer graphics, especially collision detection. Currently open for summer internship positions and research assistant.
+                    My primary interest lies in computer graphics, with a special focus on collision detection.
+                    <b> I am currently open to summer internship and research assistant opportunities that align with my passion for graphics and simulation. </b>
                 </p>
                 <h2> Work Experience </h2>
+                <!-- CSCI420 A3 -->
+                <div class="project">
+                    <div class="projects-image">
+                        <img src="images/HCL-logo.png" alt="HCL-logo">
+                    </div>
+                    <div class="projects-text">
+                        <a href="https://www.hcltech.com/en-ca/geo-presence" class="projects-text-title" target="blank">
+                            Software Developer Intern | HCL Canada Inc.
+                        </a>
+                        <br>
+                        August 2022 – August 2023
+                        <br>
+                        In a DevOps-focused internship, I streamlined build and deployment using Jenkins, built Docker images for both xLinux and pLinux, integrated SonarQube to resolve critical issues, and automated weekly log cleanups—significantly reducing human error and accelerating release cycles.
+                    </div>
+                </div>
                 <h2> Projects & Publications </h2>
                 <div class="projects">
-                    <!-- CSCI420 A1 -->
+                    <!-- CSCI420 A3 -->
+                    <div class="project">
+                        <div class="projects-image">
+                            <img src="images/CSCI420-A3.png" alt="CSCI420-A3">
+                        </div>
+                        <div class="projects-text">
+                            <a href="https://github.com/YumengHe/CSCI420-Programming-Assignment-3-Ray-tracing" class="projects-text-title" target="blank">
+                                Ray Tracing | C++
+                            </a>
+                            <br>
+                            Fall 2024
+                            <br>
+                            In this assignment, we built a ray tracer. The ray tracer is be able to handle opaque surfaces with lighting and shadows.
+                            <br>
+                            <a href="https://github.com/YumengHe/CSCI420-Programming-Assignment-3-Ray-tracing" target="blank">[Code]</a>
+                            <a href="https://odedstein.com/teaching/hs-2024-csci-420/assign3/" target="blank">[Project Page]</a>
+                        </div>
+                    </div>
+                    <!-- CSCI420 A2 -->
                     <div class="project">
                         <div class="projects-image">
                             <img src="images/CSCI420-A2.png" alt="CSCI420-A2">
                         </div>
                         <div class="projects-text">
-                            <a href="https://github.com/YumengHe/CSCI420-Programming-Assignment-2-Simulating-a-Roller-Coaster" class="projects-text-title">
-                                Simulating a Roller Coaster
+                            <a href="https://github.com/YumengHe/CSCI420-Programming-Assignment-2-Simulating-a-Roller-Coaster" class="projects-text-title" target="blank">
+                                Simulating a Roller Coaster | OpenGL
                             </a>
                             <br>
                             Fall 2024
                             <br>
                             This assignment utilizes Catmull-Rom splines together with OpenGL's core profile shader-based lighting and texture mapping to simulate a roller coaster.
                             <br>
-                            <a href="https://github.com/YumengHe/CSCI420-Programming-Assignment-2-Simulating-a-Roller-Coaster">[Code]</a>
-                            <a href="https://odedstein.com/teaching/hs-2024-csci-420/assign2/">[Project Page]</a>
-                            <a href="https://youtu.be/GnHh8fWVEcY">[Demo Video]</a>
+                            <a href="https://github.com/YumengHe/CSCI420-Programming-Assignment-2-Simulating-a-Roller-Coaster" target="blank">[Code]</a>
+                            <a href="https://odedstein.com/teaching/hs-2024-csci-420/assign2/" target="blank">[Project Page]</a>
+                            <a href="https://youtu.be/GnHh8fWVEcY" target="blank">[Demo Video]</a>
                         </div>
                     </div>
                     <!-- CSCI420 A1 -->
@@ -66,19 +103,44 @@
                             <img src="images/CSCI420-A1.png" alt="CSCI420-A1">
                         </div>
                         <div class="projects-text">
-                            <a href="https://github.com/YumengHe/CSCI420-Programming-Assignment-1-Height-Fields-Using-Shaders" class="projects-text-title"> Height Fields Using Shaders </a>
+                            <a href="https://github.com/YumengHe/CSCI420-Programming-Assignment-1-Height-Fields-Using-Shaders" class="projects-text-title" target="blank">
+                                Height Fields Using Shaders | OpenGL
+                            </a>
                             <br>
                             Fall 2024
                             <br>
                             This program renders a height field using OpenGL shaders, allowing interactive visualization and manipulation of terrain data derived from heightmap images. It supports various rendering modes, smooth shading, and user controls for transformation and camera adjustments.
                             <br>
-                            <a href="https://github.com/YumengHe/CSCI420-Programming-Assignment-1-Height-Fields-Using-Shaders">[Code]</a>
-                            <a href="https://odedstein.com/teaching/hs-2024-csci-420/assign1/">[Project Page]</a>
-                            <a href="https://youtu.be/-l9-UUwLa6g">[Demo Video]</a>
+                            <a href="https://github.com/YumengHe/CSCI420-Programming-Assignment-1-Height-Fields-Using-Shaders" target="blank">[Code]</a>
+                            <a href="https://odedstein.com/teaching/hs-2024-csci-420/assign1/" target="blank">[Project Page]</a>
+                            <a href="https://youtu.be/-l9-UUwLa6g" target="blank">[Demo Video]</a>
+                        </div>
+                    </div>
+                    <!-- PetPal -->
+                    <div class="project">
+                        <div class="projects-image">
+                            <img src="images/PetPal.png" alt="PetPal">
+                        </div>
+                        <div class="projects-text">
+                            <a href="https://github.com/YumengHe/CSC309-Petpal" class="projects-text-title" target="blank"> Petpal | Full-Stack </a>
+                            <br>
+                            Fall 2023
+                            <br>
+                            Led a four-person team to develop a Python-based adoption platform with Django REST Framework and MySQL—implementing advanced search filters, real-time data handling, a responsive front end (HTML/CSS/JS), and secure authentication to streamline the pet adoption process.
+                            <br>
+                            <a href="https://github.com/YumengHe/CSC309-Petpal" target="blank">[Code]</a>
                         </div>
                     </div>
                 </div>
                 <h2> Fun Facts</h2>
+                <ul>
+                    <li>In addition to my academic pursuits, I’m also a tattoo artist.
+                        Check out my work on Instagram at @rainy.tattoo.
+                    </li>
+                    <li>I built this webpage entirely from scratch without any templates;
+                        it’s a simple static site, but a great way to practice HTML and CSS.
+                    </li>
+                </ul>
             </div>
         </div>
 

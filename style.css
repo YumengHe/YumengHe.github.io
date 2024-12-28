@@ -10,11 +10,16 @@ body {
     margin: 0;
 }
 
+p {
+    margin: 0;
+}
+
 .page {
     margin: 8%;
 }
 
 .left-page {
+    position: fixed;
     float: left;
     width: 30%;
     text-align: center;
@@ -23,9 +28,17 @@ body {
 .right-page {
     float:right;
     width: 70%;
+    margin-bottom: 10%;
 }
 
-h2 { color: #AD88C6; font-weight: 500; margin: 2px 0px 15px; font-size: 157%; line-height: 1.1; }
+h2 { color: #AD88C6; font-weight: 500; margin: 15px 0px 15px; font-size: 157%; line-height: 1.1; }
+
+.my-name {
+    margin: 6px 0px 6px;
+}
+
+.latest-update {
+}
 
 a {
     /* color: #7FC7D9; */
@@ -33,10 +46,15 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    text-decoration: underline;
+    color: #7469B6;
+}
+
 .projects {
     display: flex;
     flex-direction: column;
-    gap: 1rem; /* space between each project */
+    gap: 20px; /* space between each project */
 }
 
 .project {
@@ -50,6 +68,8 @@ a {
     height: auto; 
     object-fit: contain; 
     margin-right: 1%;
+    border-radius: 10px; /* rounder */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* shadow */
 }
 
 .projects-text {
@@ -61,6 +81,28 @@ a {
 }
 
 .my-photo {
-    width: 50%;
-    height: 50%;
+    width: 160px;
+    height: auto; 
+    border-radius: 10px; /* rounder */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* shadow */
 }
+
+@media (max-width: 960px) {
+    .page {
+        margin: 4%;
+    }
+
+    .left-page {
+      position: static;    /* no longer fixed */
+      float: none;         /* remove float */
+      width: 100%;         /* full width */
+      margin-bottom: 2rem; /* some space below left-page */
+    }
+  
+    .right-page {
+      float: none;         /* remove float */
+      width: 100%;         /* full width */
+      margin-bottom: 2rem; /* adjust as needed */
+    }
+    
+  }
