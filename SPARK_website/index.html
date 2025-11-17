@@ -70,24 +70,16 @@
       <div class="container">
         <div id="results-carousel" class="carousel results-carousel">
           <div class="item item-vase">
-            <video poster="" id="vase" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/ours_vase.mp4" type="video/mp4">
-            </video>
+            <img src="./static/inthewild/1/SPARK_blender.gif" class="comparison-image" />
           </div>
           <div class="item item-tennis">
-            <video poster="" id="tennis" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/ours_tennis.mp4" type="video/mp4">
-            </video>
+            <img src="./static/inthewild/1/SPARK_blender.gif" class="comparison-image" />
           </div>
           <div class="item item-tennis">
-            <video poster="" id="tennis" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/ours_cake.mp4" type="video/mp4">
-            </video>
+            <img src="./static/inthewild/1/SPARK_blender.gif" class="comparison-image" />
           </div>
           <div class="item item-diamond">
-            <video poster="" id="diamond" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/ours_diamond.mp4" type="video/mp4">
-            </video>
+            <img src="./static/inthewild/1/SPARK_blender.gif" class="comparison-image" />
           </div>
           <div class="item item-creme">
             <video poster="" id="creme" autoplay controls muted loop playsinline height="100%">
@@ -150,16 +142,14 @@
     </div>
   </section>
 
-  <section class="section">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3">Pipeline</h2>
-      <img src="./static/images/SPARK_pipeline.png" class="interpolation-image" />
-      <p>
-        We use a VLM to generate per-part reference images, predicted open-state images, and URDF templates with preliminary joint and link estimations. 
-        A Diffusion Transformer (DiT) equipped with local, global, and hierarchical attention mechanisms simultaneously synthesizes part-level and complete articulated meshes from a single image with VLM priors. 
-        We further employ a generative texture model to generate realistic textures and refine the URDF parameters using differentiable forward kinematics and differentiable rendering under the guidance of the predicted open-state images.
-      </p>
-    </div>
+  <section class="section pipeline-section">
+    <h2 class="title is-3">Pipeline</h2>
+    <img src="./static/images/SPARK_pipeline.png" class="interpolation-image" />
+    <p>
+      We use a VLM to generate per-part reference images, predicted open-state images, and URDF templates with preliminary joint and link estimations.
+      A Diffusion Transformer (DiT) equipped with local, global, and hierarchical attention mechanisms simultaneously synthesizes part-level and complete articulated meshes from a single image with VLM priors.
+      We further employ a generative texture model to generate realistic textures and refine the URDF parameters using differentiable forward kinematics and differentiable rendering under the guidance of the predicted open-state images.
+    </p>
   </section>
 
   <!-- <section class="section">
@@ -185,13 +175,11 @@
     </div>
   </section> -->
 <section class="video-comparison-section">
-    <div class="container is-max-desktop">
-		<h2 class="title is-3" style="text-align: left;">Qualitative Comparison on Shape Reconstruction</h2>
-		<p>
-			We compare our results with OmniPart, PartCrafter, and URD-Former. 
-			Our method fulfills accurate, high-fidelity articulated object shape reconstruction.
-		</p>
-    </div>
+	<h2 class="title is-3" style="text-align: left;">Qualitative Comparison on Shape Reconstruction</h2>
+	<p>
+		We compare our results with OmniPart, PartCrafter, and URD-Former.
+		Our method fulfills accurate, high-fidelity articulated object shape reconstruction.
+	</p>
     <h3>7221Microwave</h3>
     <div class="video-container">
         <div class="video-item">
@@ -362,14 +350,12 @@
 </section>
 
 <section class="video-comparison-section">
-    <div class="container is-max-desktop">
-		<h2 class="title is-3" style="text-align: left;">Qualitative Comparison on URDF Estimation</h2>
-		<p>
-			We compare our results with Articulate-Anything, Articulate-AnyMesh. 
-			The closed-state results are reconstructed or retrieved meshes, while the open-state configurations are obtained through kinematic transformations using the estimated URDF parameters. 
-			Our method achieves more accurate and physically consistent URDF estimation, leading to realistic articulation behavior.
-		</p>
-    </div>
+	<h2 class="title is-3" style="text-align: left;">Qualitative Comparison on URDF Estimation</h2>
+	<p>
+		We compare our results with Articulate-Anything, Articulate-AnyMesh.
+		The closed-state results are reconstructed or retrieved meshes, while the open-state configurations are obtained through kinematic transformations using the estimated URDF parameters.
+		Our method achieves more accurate and physically consistent URDF estimation, leading to realistic articulation behavior.
+	</p>
     <h3>7236 Microwave</h3>
     <div class="video-container">
         <div class="video-item">
@@ -382,7 +368,7 @@
         </div>
         <div class="video-item emphasized">
             <h4>Ours</h4>
-            <img src="./static/URDF/7236_microwave/SPARK.gif" class="comparison-image" />
+            <img src="./static/URDF/7236_microwave/SPARK_blender.gif" class="comparison-image" />
         </div>
 		<div class="video-item" >
 			<h4>Articulate-Anything</h4>
@@ -405,7 +391,7 @@
         </div>
         <div class="video-item emphasized">
             <h4>Ours</h4>
-            <img src="./static/URDF/10627_refrigerator/SPARK.gif" class="comparison-image" />
+            <img src="./static/URDF/10627_refrigerator/SPARK_blender.gif" class="comparison-image" />
         </div>
 		<div class="video-item" >
 			<h4>Articulate-Anything</h4>
@@ -428,7 +414,7 @@
         </div>
         <div class="video-item emphasized">
             <h4>Ours</h4>
-            <img src="./static/URDF/20411_table/SPARK.gif" class="comparison-image" />
+            <img src="./static/URDF/20411_table/SPARK_blender.gif" class="comparison-image" />
         </div>
 		<div class="video-item" >
 			<h4>Articulate-Anything</h4>
@@ -451,7 +437,7 @@
         </div>
         <div class="video-item emphasized">
             <h4>Ours</h4>
-            <img src="./static/URDF/44817_storagefurniture/SPARK.gif" class="comparison-image" />
+            <img src="./static/URDF/44817_storagefurniture/SPARK_blender.gif" class="comparison-image" />
         </div>
 		<div class="video-item" >
 			<h4>Articulate-Anything</h4>
@@ -474,7 +460,7 @@
         </div>
         <div class="video-item emphasized">
             <h4>Ours</h4>
-            <img src="./static/URDF/100021_kitchenpot/SPARK.gif" class="comparison-image" />
+            <img src="./static/URDF/100021_kitchenpot/SPARK_blender.gif" class="comparison-image" />
         </div>
 		<div class="video-item" >
 			<h4>Articulate-Anything</h4>
@@ -497,7 +483,7 @@
         </div>
         <div class="video-item emphasized">
             <h4>Ours</h4>
-            <img src="./static/URDF/100473_bucket/SPARK.gif" class="comparison-image" />
+            <img src="./static/URDF/100473_bucket/SPARK_blender.gif" class="comparison-image" />
         </div>
 		<div class="video-item" >
 			<h4>Articulate-Anything</h4>
@@ -511,15 +497,56 @@
 </section>
 
 <style>
+  /* Carousel section styling */
+  .hero.is-light .hero-body {
+      padding: 3rem 1.5rem;
+  }
+  .results-carousel {
+      max-width: 1152px;
+      margin: 0 auto;
+  }
+  .results-carousel .item img {
+      max-width: 400px;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+  }
+  .results-carousel .item video {
+      max-width: 400px;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+  }
+
+  .pipeline-section {
+      padding: 20px;
+      margin: 0 auto;
+      max-width: 1152px;
+  }
+  .pipeline-section h2 {
+      text-align: left;
+      margin-bottom: 20px;
+  }
+  .pipeline-section p {
+      text-align: left;
+      margin-top: 20px;
+      line-height: 1.6;
+  }
+
   .video-comparison-section {
       padding: 20px;
       margin: 20px auto;
-      max-width: 1200px;
+      max-width: 1152px;
   }
   .video-comparison-section h2 {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       font-size: 2em;
+  }
+  .video-comparison-section > p {
+      text-align: left;
+      margin-bottom: 30px;
+      line-height: 1.6;
   }
   .video-comparison-section h3 {
       text-align: left;
