@@ -3,16 +3,22 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="description"
-    content="a novel framework that integrates VLM-guided part-level and global image guidance with diffusion transformers to produce high-quality articulated object reconstructions.">
-  <meta name="keywords" content="Generative Dynamics, Physics-Ground, Video Generation">
+  <meta name="description" content="a novel framework that integrates VLM-guided part-level and global image guidance with diffusion transformers to produce high-quality articulated object reconstructions.">
+  <meta name="keywords" content="SPARK, 3D Reconstruction, 3D Generation, Articulated Object Reconstruction">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SPARK: Sim-ready Part-level Articulated Reconstruction with VLM Knowledge</title>
+  <title>SPARK</title>
 
   <link rel="stylesheet" href="./static/css/google-fonts-local.css">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Academicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.9.4/css/academicons.min.css">
+
   <link rel="icon" href="./static/images/icon.png">
 
   <script src="./static/js/jquery.min.js"></script>
@@ -27,9 +33,108 @@
         <div class="columns is-centered">
           <div class="column has-text-centered">
             <h1 class="title is-1 publication-title">SPARK: Sim-ready Part-level Articulated Reconstruction with VLM Knowledge</h1>
+
+            <!-- Authors -->
             <div class="is-size-5 publication-authors">
               <span class="author-block">
-                Anonymous
+                <a href="https://heyumeng.com/">Yumeng He</a><sup>1*</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://yingjiang96.github.io/">Ying Jiang</a><sup>2*</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://jlu227.wixsite.com/kay-lu">Jiayin Lu</a><sup>2*</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://yangzzzy.github.io/">Yin Yang</a><sup>3</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.math.ucla.edu/~cffjiang/">Chenfanfu Jiang</a><sup>2</sup>
+              </span>
+            </div>
+
+            <!-- Affiliations -->
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>University of Southern California</span> &nbsp;
+              <span class="author-block"><sup>2</sup>University of California, Los Angeles</span> &nbsp;
+              <span class="author-block"><sup>3</sup>University of Utah</span>
+            </div>
+
+            <!-- Emails -->
+            <!-- <div class="is-size-5 publication-authors">
+              <span class="author-block">✉️: <a href="mailto:heyumeng@usc.edu">heyumeng@usc.edu</a></span>
+            </div> -->
+
+            <!-- Author Notes -->
+            <div class="is-size-6 publication-authors">
+              <span class="author-block"><i>* denotes equal contribution</i></span>
+            </div>
+
+            <div class="is-size-5 publication-info">
+              <b>In submission, 2025</b>
+            </div>
+
+            <!-- Links -->
+            <div class="column has-text-centered">
+              <div class="publication-links">
+
+                <!-- OpenReview Link -->
+                <!-- <span class="link-block">
+                  <a href="https://openreview.net/forum?id="
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-alt"></i></span>
+                    <span>OpenReview</span>
+                  </a>
+                </span> &nbsp; -->
+                <!-- ArXiv Link -->
+
+                <span class="link-block">
+                  <a href="" 
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="ai ai-arxiv"></i></span>
+                    <span>arXiv</span>
+                  </a>
+                </span> &nbsp;
+
+                <!-- Code Link -->
+                <!-- <span class="link-block">
+                  <a href="https://github.com/wgsxm/PartCrafter"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code</span>
+                  </a>
+                </span> &nbsp; -->
+
+                <!-- Video Link -->
+                <!-- <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=ZaZHbkkPtXY"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i> 
+                  </span>
+                  <span>Video</span>
+                </a>
+                </span> &nbsp; -->
+
+                <!-- Model Link -->
+                <!-- <span class="link-block">
+                  <a href="https://huggingface.co/wgsxm/PartCrafter"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-database"></i></span>
+                    <span>Model</span>
+                  </a>
+                </span> &nbsp; -->
+
+                <!-- Demo Link -->
+                <!-- <span class="link-block">
+                  <a href="https://huggingface.co/spaces/alexnasa/PartCrafter"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-magic"></i></span>
+                    <span>Demo</span>
+                  </a>
+                </span> -->
+
+              </div>
             </div>
 
             <div class="column has-text-centered">
@@ -42,6 +147,7 @@
       </div>
     </div>
   </section>
+  
 
   <section class="hero teaser">
     <div class="container is-max-desktop">
@@ -92,7 +198,7 @@
       <!-- Abstract. -->
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
-          <h2 class="title is-3">Abstract</h2>
+          <h2 class="title is-3">✨ Abstract ✨</h2>
           <div class="content has-text-justified">
             <p>
               Articulated 3D objects are critical for embodied AI, robotics, and interactive scene understanding, yet creating simulation-ready assets remains labor-intensive and requires expert modeling of part hierarchies and motion structures. 
@@ -121,7 +227,7 @@
   </section>
 
   <section class="section pipeline-section">
-    <h2 class="title is-3">Pipeline</h2>
+    <h2 class="title is-3" style="text-align: center;">🎯 Pipeline 🎯</h2>
     <img src="./static/images/SPARK_pipeline.png" class="interpolation-image" />
     <p>
       We use a VLM to generate per-part reference images, predicted open-state images, and URDF templates with preliminary joint and link estimations.
@@ -131,7 +237,7 @@
   </section>
 
 <section class="video-comparison-section">
-	<h2 class="title is-3" style="text-align: left;">Qualitative Comparison on Shape Reconstruction</h2>
+	<h2 class="title is-3" style="text-align: center;">♠️ Qualitative Comparison on Shape Reconstruction ♠️</h2>
 	<p>
 		We compare our results with OmniPart, PartCrafter, and URDFormer.
 		Our method fulfills accurate, high-fidelity articulated object shape reconstruction.
@@ -200,7 +306,7 @@
 		</div>
         <div class="video-item ">
             <h4>Ground Truth</h4>
-            <img src="./static/mesh/25913_desk/GT_light.gif" class="comparison-image" />
+            <img src="./static/mesh/25913_desk/GT2.gif" class="comparison-image" />
         </div>
         <div class="video-item emphasized">
             <h4>Ours</h4>
@@ -306,7 +412,7 @@
 </section>
 
 <section class="video-comparison-section">
-	<h2 class="title is-3" style="text-align: left;">Qualitative Comparison on URDF Estimation</h2>
+	<h2 class="title is-3" style="text-align: center;">♣️ Qualitative Comparison on URDF Estimation ♣️</h2>
 	<p>
 		We compare our results with Articulate-Anything, Articulate-AnyMesh.
 		The closed-state results are reconstructed or retrieved meshes, while the open-state configurations are obtained through kinematic transformations using the estimated URDF parameters.
@@ -553,12 +659,43 @@
   }
 </style>
 
+<!-- BibTeX -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3 has-text-centered">🦜 BibTeX 🦜</h2>
+    <div class="content has-text-justified">
 
-<footer class="footer">
-    <div class="container">
-        <div class="content has-text-centered">
-        </div>
+      <p>
+        If you find our work helpful, please consider citing:
+      </p>
+<pre><code>@misc{he2025spark,
+title={SPARK: Sim-ready Part-level Articulated Reconstruction with VLM Knowledge}, 
+author={Yumeng He and Ying Jiang and Jiayin Lu and Yin Yang and Chenfanfu Jiang},
+year={2025},
+eprint={2512.00000},
+url={https://arxiv.org/abs/2512.00000}
+}</code></pre>
     </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+
+    <!-- Copyright -->
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p style="text-align: center">
+            Website template is borrowed from <a href="https://nerfies.github.io">Nerfies</a>.
+            Thanks for their effort.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </footer>
 
 </body>
