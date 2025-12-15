@@ -69,6 +69,15 @@ a:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* shadow */
 }
 
+.teaser-image img{
+    width: 500px;
+    height: auto; 
+    object-fit: contain; 
+    margin-right: 1%;
+    border-radius: 0px; /* rounder */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* shadow */
+}
+
 .projects-image video{
     width: 200px;
     height: auto; 
