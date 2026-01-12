@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1" name="viewport">
+<title>PL-23 Scene1 怀疑辛德瑞亚</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<h2>PL-23 Scene1 怀疑辛德瑞亚</h2>
+<div class="task-container">
+  <div class="task-state">
+    User State = resolve_case1
+    Mila State = resolve_sydria_up
+    NewInfo = [resolve_sydria_up_success]
+  </div>
+  <div class="task-content">
+    米娜: 
+    - 辛德瑞亚在案发时间上楼了。天台确实是满足条件的好地方。
+    - 虽然时间有点久，但你应该探查出为什么她在凌晨有这样怪异的举动了，是因为？
+
+    玩家: 
+    -【线索 - Sydria上楼的原因 - reason_for_up_1】
+    - 辛德瑞亚上楼是因为怀念故乡
+  </div>
+</div>
+
+<div class="task-container">
+  <div class="task-state">
+    User State = resolve_case1
+    Mila State = resolve_sydria_building
+    NewInfo = [resolve_sydria_building_success]
+  </div>
+  <div class="task-content">
+    米娜: 
+    - 但是这并不是决定性的证据. 
+    - 动动你的水泥小脑袋吧，什么可以证明她并没有在那里推下保安机器人？
+    - 首先，如果辛德瑞亚和亚当都在天台，那辛德瑞亚完全有可能有一些方法把他丢下去。但那个时候天台附近和平时不太一样，是什么，嗯？
+
+    玩家: 
+    -【线索 - “新陈代谢”示意图 - schematic_diagram_1】 
+    -【线索 - “新陈代谢”时间记录 - metab_record_1】 
+    - 顶楼正在进行新陈代谢 有房间被抽出
+  </div>
+</div> 
+
+<div class="task-container">
+  <div class="task-state">
+    User State = resolve_case1
+    Mila State = resolve_sydria_heavy
+    NewInfo = [resolve_sydria_heavy_success]
+  </div>
+  <div class="task-content">
+    米娜：
+    - 不错。如果辛德瑞亚想要丢下亚当，让他在那一时刻坠亡，由于正在发生的新陈代谢，是不可能有那样的现场的。想明白了吗？
+
+    玩家:
+    -【线索 - 现场情况 - onsite_situation_1】
+    - 因为伸出的房间挡住了03房间的上方，亚当不可能像现在一样掉在这个位置。
+  </div>
+</div>
+
+<div class="task-container">
+  <div class="task-state">
+    User State = resolve_case1
+    Mila State = resolve_sydria_innocence
+    NewInfo = [resolve_sydria_innocence_success]
+  </div>
+  <div class="task-content">
+    米娜：
+    - 不过嘛，也许辛德瑞亚在别的地方丢下他，有什么大风把他吹到了那个位置，这可能吗？
+
+    玩家:
+    -【线索 -欧米尼斯日报 - newspaper_1】 
+    - 成年男子的体重和正常的天气不会改变下坠的位置
+
+    米娜: 
+    - 她不可能在那个时候丢下亚当，因为当时20楼03室及附近的房间仍然处于被抽出了一半的状态，阻隔了位置，辛德瑞亚无法把Adam丢到离大楼如此近的03室下方的地方。当天天气是微风，对于一个成年男子重量的仿生人来说，不可能被吹动，一定是直直地下落。
+  </div>
+</div>
+
+<div class="task-container">
+  <div class="task-state">
+    User State = resolve_case1
+    Mila State = resolve_pl23_trick
+    NewInfo = [resolve_pl23_trick_success]
+  </div>
+  <div class="task-content">
+    米娜:
+    - 那看来，唯一的嫌疑人就是Pl23了
+    - 嗯......
+    - 也就是说，有什么办法可以让adam的死亡隔空发生吗？
+    - 噗，也是，这么麻烦的问题没那么好理解。一步步来吧，坠落的时间点其实有点奇怪，当时发生了什么事情？
+
+    玩家:
+    -【线索 - “新陈代谢”时间记录 - metab_record_1】
+    - 10楼的胶囊被抽出了。
+
+    米娜:
+    - 没错，当时10楼的胶囊被完全抽出了。
+  </div>
+</div>
+
+<div class="task-container">
+  <div class="task-state">
+    User State = resolve_case1
+    Mila State = resolve_pl23_fall
+    NewInfo = [resolve_pl23_fall_success]
+  </div>
+  <div class="task-content">
+    米娜:
+    - 如果这件事和亚当的坠落脱不了干系，这个抽出的运动轨迹......那，这意味着......
+
+    玩家:
+    - 亚当就是从被抽出的胶囊上坠落的
+  </div>
+</div>
+
+<div class="task-container">
+  <div class="task-state">
+    User State = resolve_case1
+    Mila State = resolve_pl23_time
+    NewInfo = [resolve_pl23_time_success]
+  </div>
+  <div class="task-content">
+    米娜:
+    - 真是感天动地啊，你也算是开窍了。那PL-23是在什么时候做的这件事情？
+
+    玩家:
+    -【线索 - 活动室的进出记录 - enter_record_1】
+    - 中午十二点到十二点零五 
+  </div>
+</div>
+
+<div class="task-container">
+  <div class="task-state">
+    User State = resolve_case1
+    Mila State = resolve_pl23_adam
+    NewInfo = [resolve_pl23_adam_success]
+  </div>
+  <div class="task-content">
+    米娜:
+    - 那个时候的亚当是什么样的状态呢？
+
+    玩家:
+    -【线索 - 芯片记录 - chip_record_1】
+    - 亚当昏厥了
+  </div>
+</div>
+
+<div class="task-container">
+  <div class="task-state">
+    User State = resolve_case1
+    Mila State = resolve_pl23_tool
+    NewInfo = [resolve_pl23_tool_success]
+  </div>
+  <div class="task-content">
+    米娜:
+    - 说得好！Pl23应该有工具和方法从一个地方把亚当放到胶囊的顶端
+
+    玩家:
+    -【线索 - 长长的绳子 - rope_1】
+    -【线索 - 窗户 - function_of_window_1】
+    - PL-23应该就是从窗户把亚当放到胶囊的顶端
+  </div>
+</div>
+
+<div class="task-container">
+  <div class="task-state">
+    User State = resolve_case1
+    Mila State = resolve_pl23_home
+    NewInfo = [resolve_pl23_home_success]
+  </div>
+  <div class="task-content">
+    米娜:
+    - 他住在...？
+
+    玩家:
+    -【线索 - 奇怪的光 - strange_light_1】
+    - PL-23的房间13楼03室
+
+    米娜:
+    - 没错, PL23应该就是在12点左右让亚当昏厥，从自己13楼03室的窗户缝隙，用绳子把亚当放到正在向外移动的胶囊上方；
+    - 然后去学习室出现，作为自己的不在场证明；
+    - 最后时间来到了13点，被抽离至直立的胶囊无法再承载亚当，于是他在那一刻坠落到了如今的位置......
+    - 干得漂亮。
+  </div>
+</div>
+
+<div class="task-container">
+  <div class="task-state">
+    User State = summarize_case1
+    PL23 State = resolve_question1
+    Feiliang State = resolve
+    Mila State = resolve
+  </div>
+  <div class="task-content">
+    (此时PL-23，费亮，米娜和玩家都在一起)
+
+    PL-23：
+    - ...你或许发现了，当时他因为调查一件事情来敲我的房门。
+    
+    玩家：
+    - 展示：【奇怪的噪音】
+    
+    PL-23:
+    - AI随便回答。
+  </div>
+</div>
+
+<div class="task-container">
+  <div class="task-state">
+    User State = summarize_case1
+    PL23 State = resolve_question2
+    Feiliang State = resolve
+    Mila State = resolve
+  </div>
+  <div class="task-content">
+    PL23:
+    - 他正好看到了我的那个元件，你应该也知道是什么。
+    
+    玩家：
+    - 展示：【收集数据的接收器】
+    
+    PL23:
+    - AI随便回答。
+    - 我对这件事情没有更多可说的。希望还有再见的那一天吧，新调节官。
+
+    费亮:
+    - 啊......所以噪音是他放在大楼内的设备出错导致的吗.......不管怎样，起码我和我女儿晓梦可以正常生活了......
+    - 太好了.......
+    - 谢谢你。
+
+    米娜:
+    - 好，总算是搞定了。
+    - 回家吧，刚来几天就遇到这么麻烦的案子。明天来找你，你可别累死了啊。
+  </div>
+</div>
+
+<div class="task-container">
+  <div class="task-state">
+    User State = finished_case1
+  </div>
+  <div class="task-content">
+    【任务 - 回家，睡觉】正如Mila所说，是时候该回家睡觉了。
+
+    （天色转暗，回家路上，市场附近遇到不明疯子）
+
+    疯子：
+    - 眼睛不在这里。
+    - 这里没有眼睛。
+    - 在想法和现实之间，在动作和行为之间，影子降临。
+    （《空心人》T.S. 艾略特 | T.S. ELIOT）（眼睛：政府-公司结合体/Omnis， 影子：芯片）
+    - 因为国度都是你的。
+
+    （回到家中）
+    （和床互动）
+    （画面转暗，疑似要睡觉，大约2-3秒）
+    （突然恢复正常亮度，响起眩晕声）
+
+    背景音：
+    - 那些有直接眼睛的人，已经横渡至死亡另一帝国的人。
+  </div>
+</div>
+
+<a href="../index.html">返回首页</a>
+
+
+</body>
+</html>
