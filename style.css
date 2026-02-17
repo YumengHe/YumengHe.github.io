@@ -21,7 +21,7 @@ p {
 .left-page {
     position: fixed;
     float: left;
-    width: 30%;
+    width: 25%;
     text-align: center;
 }
 
@@ -31,7 +31,7 @@ p {
     margin-bottom: 10%;
 }
 
-h2 { color: #AD88C6; font-weight: 500; margin: 15px 0px 15px; font-size: 157%; line-height: 1.1; }
+h2 { color: #7469B6; font-weight: bold; margin: 15px 0px 15px; font-size: 157%; line-height: 1.1; }
 
 .my-name {
     margin: 6px 0px 6px;
@@ -45,7 +45,7 @@ a {
 
 a:hover {
     text-decoration: underline;
-    color: #7469B6;
+    color: #ABDADA;
 }
 
 .projects {
@@ -91,12 +91,13 @@ a:hover {
     text-align: left;
 }
 
-.projects-text-title{
-    font-weight: 700;
+.project-text-title{
+    color: #AD88C6;
+    font-weight: bold;
 }
 
 .my-photo {
-    width: 160px;
+    width: 180px;
     height: auto; 
     border-radius: 10px; /* rounder */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* shadow */
