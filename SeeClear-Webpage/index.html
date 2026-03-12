@@ -233,7 +233,7 @@
         <div class="column is-four-fifths">
           <div class="publication-video">
             <video controls autoplay muted loop playsinline style="width: 100%;">
-              <source src="./static/video.mp4" type="video/mp4">
+              <source src="./video.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
           </div>
@@ -324,7 +324,7 @@
                   D4RD  
                 </div>
                 <div class="comparison-item">
-                  <img src="static/images/comparison/cleargrasp/dkt/1_global/real-test_d415_000000000_color.png" alt="Input">
+                  <img src="static/images/comparison/cleargrasp/dkt/dkt cleargrasp/real-test_d415_000000000__dkt_color.png" alt="Input">
                   DKT
                 </div>
                 <div class="comparison-item">
@@ -376,7 +376,7 @@
                 D4RD  
               </div>
               <div class="comparison-item">
-                <img src="static/images/comparison/cleargrasp/dkt/1_global/real-test_d415_000000001_color.png" alt="Input">
+                <img src="static/images/comparison/cleargrasp/dkt/dkt cleargrasp/real-test_d415_000000001__dkt_color.png" alt="Input">
                 DKT
               </div>
               <div class="comparison-item">
@@ -428,7 +428,7 @@
                 D4RD  
               </div>
               <div class="comparison-item">
-                <img src="static/images/comparison/TransPhy3D/dkt/1_global/0826_0014_00000030_color.png" alt="Input">
+                <img src="static/images/comparison/TransPhy3D/dkt/dkt transphy/0826_0014_00000030__dkt_color.png" alt="Input">
                 DKT
               </div>
               <div class="comparison-item">
@@ -460,10 +460,107 @@
     </div>
   </section>
 
+  <!-- TDoF20 Comparison Section -->
+  <section class="section">
+    <div class="container">
+      <h2 class="title is-3" style="text-align:center;">🔷 TDoF20 Comparison 🔷</h2>
+      <p style="text-align:center; margin-bottom: 2rem;">Comparison on TDoF20 dataset. Rows show Input, Ground Truth, DKT, and Ours. Each column is a different scene.</p>
 
+      <div class="tdof-grid-new">
+        <!-- Row 1: Input -->
+        <div class="tdof-label">Input</div>
+        <img src="static/images/comparison/TDoF20/cube_166_1461/cube_166_1461_rgb.jpg" alt="Input">
+        <img src="static/images/comparison/TDoF20/cube_216_1321/cube_216_1321_rgb.jpg" alt="Input">
+        <img src="static/images/comparison/TDoF20/cuboid_330_1509/cuboid_330_1509_rgb.jpg" alt="Input">
+        <img src="static/images/comparison/TDoF20/handle_cup_440_1514/handle_cup_440_1514_rgb.jpg" alt="Input">
+        <img src="static/images/comparison/TDoF20/juice_cup_340_1588/juice_cup_340_1588_rgb.jpg" alt="Input">
+
+        <!-- Row 2: Ground Truth -->
+        <div class="tdof-label">Ground Truth</div>
+        <img src="static/images/comparison/TDoF20/cube_166_1461/cube_166_1461_gt_depth_color.png" alt="Ground Truth">
+        <img src="static/images/comparison/TDoF20/cube_216_1321/cube_216_1321_gt_depth_color.png" alt="Ground Truth">
+        <img src="static/images/comparison/TDoF20/cuboid_330_1509/cuboid_330_1509_gt_depth_color.png" alt="Ground Truth">
+        <img src="static/images/comparison/TDoF20/handle_cup_440_1514/handle_cup_440_1514_gt_depth_color.png" alt="Ground Truth">
+        <img src="static/images/comparison/TDoF20/juice_cup_340_1588/juice_cup_340_1588_gt_depth_color.png" alt="Ground Truth">
+
+        <!-- Row 3: DKT -->
+        <div class="tdof-label">DKT</div>
+        <img src="static/images/comparison/TDoF20/cube_166_1461/cube_166_1461_dkt_depth_color.png" alt="DKT">
+        <img src="static/images/comparison/TDoF20/cube_216_1321/cube_216_1321_dkt_depth_color.png" alt="DKT">
+        <img src="static/images/comparison/TDoF20/cuboid_330_1509/cuboid_330_1509_dkt_depth_color.png" alt="DKT">
+        <img src="static/images/comparison/TDoF20/handle_cup_440_1514/handle_cup_440_1514_dkt_depth_color.png" alt="DKT">
+        <img src="static/images/comparison/TDoF20/juice_cup_340_1588/juice_cup_340_1588_dkt_depth_color.png" alt="DKT">
+
+        <!-- Row 4: Ours -->
+        <div class="tdof-label">Ours</div>
+        <img src="static/images/comparison/TDoF20/cube_166_1461/cube_166_1461_our_depth_color.png" alt="Ours">
+        <img src="static/images/comparison/TDoF20/cube_216_1321/cube_216_1321_our_depth_color.png" alt="Ours">
+        <img src="static/images/comparison/TDoF20/cuboid_330_1509/cuboid_330_1509_our_depth_color.png" alt="Ours">
+        <img src="static/images/comparison/TDoF20/handle_cup_440_1514/handle_cup_440_1514_our_depth_color.png" alt="Ours">
+        <img src="static/images/comparison/TDoF20/juice_cup_340_1588/juice_cup_340_1588_our_depth_color.png" alt="Ours">
+      </div>
+    </div>
+  </section>
 
 
 <style>
+    /* TDoF20 new layout: label column + 5 scene columns */
+    .tdof-grid-new {
+      display: grid;
+      grid-template-columns: auto repeat(5, 1fr);
+      gap: 12px;
+      margin-top: 1.5rem;
+      align-items: center;
+  }
+
+  .tdof-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      text-align: center;
+      padding: 12px;
+      background: rgba(139, 140, 192, 0.1);
+      border-radius: 6px;
+      box-sizing: border-box;
+  }
+
+  .tdof-grid-new img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      display: block;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  @media (max-width: 1200px) {
+      .tdof-grid-new {
+          grid-template-columns: auto repeat(3, 1fr);
+      }
+      /* Hide columns 5 and 6 (images only, not labels) */
+      .tdof-grid-new img:nth-child(6n+5),
+      .tdof-grid-new img:nth-child(6n+6) {
+          display: none;
+      }
+  }
+
+  @media (max-width: 768px) {
+      .tdof-grid-new {
+          grid-template-columns: auto repeat(2, 1fr);
+      }
+      /* Hide columns 4, 5, and 6 (images only, not labels) */
+      .tdof-grid-new img:nth-child(6n+4),
+      .tdof-grid-new img:nth-child(6n+5),
+      .tdof-grid-new img:nth-child(6n+6) {
+          display: none;
+      }
+      .tdof-label {
+          font-size: 12px;
+          padding: 8px;
+      }
+  }
   /* Teaser image responsive styling */
   .interpolation-image {
       max-width: 100%;
