@@ -67,17 +67,37 @@
           <!-- Slider 1 -->
           <div id="image-slider-1" class="image-comparison-container" data-comparison-slider>
             <div class="comparison-slider">
-              <div class="comparison-slider-before">
+              <!-- Top layer: Input/Transparent -->
+              <div class="comparison-slider-top">
                 <img src="./static/images/in_the_wild/27_input.jpg" alt="Transparent Input">
               </div>
-              <div class="comparison-slider-after">
+
+              <!-- Middle layer: Result/Opaque -->
+              <div class="comparison-slider-middle">
                 <img src="./static/images/in_the_wild/27_result.png" alt="Opaque Output">
               </div>
 
-              <!-- movable divider (updated by JS) -->
-              <div class="comparison-slider-divider" aria-hidden="true"></div>
+              <!-- Bottom layer: Depth -->
+              <div class="comparison-slider-depth">
+                <img src="./static/images/in_the_wild/27_ours.png" alt="Depth">
+              </div>
 
-              <div class="comparison-slider-handle" role="slider" aria-label="Image comparison slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+              <!-- Divider 1: Left slider -->
+              <div class="comparison-slider-divider comparison-slider-divider-1" aria-hidden="true"></div>
+
+              <!-- Divider 2: Right slider -->
+              <div class="comparison-slider-divider comparison-slider-divider-2" aria-hidden="true"></div>
+
+              <!-- Handle 1: Left slider -->
+              <div class="comparison-slider-handle comparison-slider-handle-1" role="slider" aria-label="Left image comparison slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="33" data-slider-id="1">
+                <div class="comparison-slider-icon">
+                  <span class="comparison-slider-arrow left"></span>
+                  <span class="comparison-slider-arrow right"></span>
+                </div>
+              </div>
+
+              <!-- Handle 2: Right slider -->
+              <div class="comparison-slider-handle comparison-slider-handle-2" role="slider" aria-label="Right image comparison slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="66" data-slider-id="2">
                 <div class="comparison-slider-icon">
                   <span class="comparison-slider-arrow left"></span>
                   <span class="comparison-slider-arrow right"></span>
@@ -86,25 +106,45 @@
 
               <!-- persistent labels (not clipped) -->
               <div class="comparison-label comparison-label-left">Transparent</div>
-              <div class="comparison-label comparison-label-right">Opaque</div>
+              <div class="comparison-label comparison-label-middle">Opaque</div>
+              <div class="comparison-label comparison-label-right">Depth</div>
             </div>
           </div>
 
           <!-- Slider 2 -->
           <div id="image-slider-2" class="image-comparison-container" data-comparison-slider>
             <div class="comparison-slider">
-              <div class="comparison-slider-after">
-                <img src="./static/images/in_the_wild/28_result.png" alt="Opaque Output">
-              </div>
-
-              <div class="comparison-slider-before">
+              <!-- Top layer: Input/Transparent -->
+              <div class="comparison-slider-top">
                 <img src="./static/images/in_the_wild/28_input.jpg" alt="Transparent Input">
               </div>
 
-              <!-- movable divider (updated by JS) -->
-              <div class="comparison-slider-divider" aria-hidden="true"></div>
+              <!-- Middle layer: Result/Opaque -->
+              <div class="comparison-slider-middle">
+                <img src="./static/images/in_the_wild/28_result.png" alt="Opaque Output">
+              </div>
 
-              <div class="comparison-slider-handle" role="slider" aria-label="Image comparison slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+              <!-- Bottom layer: Depth -->
+              <div class="comparison-slider-depth">
+                <img src="./static/images/in_the_wild/28_ours.png" alt="Depth">
+              </div>
+
+              <!-- Divider 1: Left slider -->
+              <div class="comparison-slider-divider comparison-slider-divider-1" aria-hidden="true"></div>
+
+              <!-- Divider 2: Right slider -->
+              <div class="comparison-slider-divider comparison-slider-divider-2" aria-hidden="true"></div>
+
+              <!-- Handle 1: Left slider -->
+              <div class="comparison-slider-handle comparison-slider-handle-1" role="slider" aria-label="Left image comparison slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="33" data-slider-id="1">
+                <div class="comparison-slider-icon">
+                  <span class="comparison-slider-arrow left"></span>
+                  <span class="comparison-slider-arrow right"></span>
+                </div>
+              </div>
+
+              <!-- Handle 2: Right slider -->
+              <div class="comparison-slider-handle comparison-slider-handle-2" role="slider" aria-label="Right image comparison slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="66" data-slider-id="2">
                 <div class="comparison-slider-icon">
                   <span class="comparison-slider-arrow left"></span>
                   <span class="comparison-slider-arrow right"></span>
@@ -113,30 +153,55 @@
 
               <!-- persistent labels (not clipped) -->
               <div class="comparison-label comparison-label-left">Transparent</div>
-              <div class="comparison-label comparison-label-right">Opaque</div>
+              <div class="comparison-label comparison-label-middle">Opaque</div>
+              <div class="comparison-label comparison-label-right">Depth</div>
             </div>
           </div>
 
           <!-- Slider 3 -->
           <div id="image-slider-3" class="image-comparison-container" data-comparison-slider>
             <div class="comparison-slider">
-              <div class="comparison-slider-before">
+              <!-- Top layer: Input/Transparent -->
+              <div class="comparison-slider-top">
                 <img src="./static/images/in_the_wild/15_input.jpg" alt="Transparent Input">
               </div>
-              <div class="comparison-slider-after">
+
+              <!-- Middle layer: Result/Opaque -->
+              <div class="comparison-slider-middle">
                 <img src="./static/images/in_the_wild/15_result.png" alt="Opaque Output">
               </div>
-              <!-- movable divider (updated by JS) -->
-              <div class="comparison-slider-divider" aria-hidden="true"></div>
-              <div class="comparison-slider-handle" role="slider" aria-label="Image comparison slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+
+              <!-- Bottom layer: Depth -->
+              <div class="comparison-slider-depth">
+                <img src="./static/images/in_the_wild/15_ours.png" alt="Depth">
+              </div>
+
+              <!-- Divider 1: Left slider -->
+              <div class="comparison-slider-divider comparison-slider-divider-1" aria-hidden="true"></div>
+
+              <!-- Divider 2: Right slider -->
+              <div class="comparison-slider-divider comparison-slider-divider-2" aria-hidden="true"></div>
+
+              <!-- Handle 1: Left slider -->
+              <div class="comparison-slider-handle comparison-slider-handle-1" role="slider" aria-label="Left image comparison slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="33" data-slider-id="1">
                 <div class="comparison-slider-icon">
                   <span class="comparison-slider-arrow left"></span>
                   <span class="comparison-slider-arrow right"></span>
                 </div>
               </div>
+
+              <!-- Handle 2: Right slider -->
+              <div class="comparison-slider-handle comparison-slider-handle-2" role="slider" aria-label="Right image comparison slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="66" data-slider-id="2">
+                <div class="comparison-slider-icon">
+                  <span class="comparison-slider-arrow left"></span>
+                  <span class="comparison-slider-arrow right"></span>
+                </div>
+              </div>
+
               <!-- persistent labels (not clipped) -->
               <div class="comparison-label comparison-label-left">Transparent</div>
-              <div class="comparison-label comparison-label-right">Opaque</div>
+              <div class="comparison-label comparison-label-middle">Opaque</div>
+              <div class="comparison-label comparison-label-right">Depth</div>
             </div>
           </div>
         </div>
@@ -751,6 +816,100 @@
       pointer-events: none;
     }
 
+    /* Three-layer structure for 3-image slider */
+    .comparison-slider-top,
+    .comparison-slider-middle,
+    .comparison-slider-depth {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .comparison-slider-top img,
+    .comparison-slider-middle img,
+    .comparison-slider-depth img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .comparison-slider-top {
+      z-index: 3;
+    }
+
+    .comparison-slider-middle {
+      z-index: 2;
+    }
+
+    .comparison-slider-depth {
+      z-index: 1;
+    }
+
+    /* Dividers for two sliders */
+    .comparison-slider-divider-1,
+    .comparison-slider-divider-2 {
+      position: absolute;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background: rgba(139, 140, 192, 0.6);
+      z-index: 8;
+      pointer-events: none;
+    }
+
+    /* Handles for two sliders */
+    .comparison-slider-handle-1,
+    .comparison-slider-handle-2 {
+      position: absolute;
+      top: 50%;
+      width: 45px;
+      height: 45px;
+      transform: translate(-50%, -50%);
+      background: white;
+      border: 3px solid #8b8cc0;
+      border-radius: 50%;
+      cursor: grab;
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(139, 140, 192, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .comparison-slider-handle-1:hover,
+    .comparison-slider-handle-2:hover {
+      box-shadow: 0 6px 20px rgba(139, 140, 192, 0.6);
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    /* Middle label positioning */
+    .comparison-label-middle {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 4px 8px;
+      background: rgba(139, 140, 192, 0.85);
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      border-radius: 4px;
+      pointer-events: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(4px);
+      z-index: 12;
+    }
+
         /* Divider element (moved dynamically by JS) */
         .comparison-slider-divider {
           position: absolute;
@@ -782,10 +941,10 @@
       .comparison-label {
       position: absolute;
       bottom: 15px;
-      padding: 6px 12px;
+      padding: 4px 8px;
       background: rgba(139, 140, 192, 0.85);
       color: white;
-      font-size: 13px;
+      font-size: 10px;
       font-weight: 600;
       border-radius: 4px;
       pointer-events: none;
@@ -795,8 +954,9 @@
         z-index: 12; /* keep labels above handle and divider */
     }
 
-    .comparison-label-left { left: 15px; }
-    .comparison-label-right { right: 15px; }
+    /* Label positions will be dynamically set by JavaScript */
+    .comparison-label-left { }
+    .comparison-label-right { }
 
   .comparison-slider-handle {
       position: absolute;
