@@ -96,6 +96,16 @@ a:hover {
     font-weight: bold;
 }
 
+.oral-tag {
+    background-color: #E05A5A;
+    color: #fff;
+    font-size: 80%;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 6px;
+}
+
 .my-photo {
     width: 180px;
     height: auto; 
