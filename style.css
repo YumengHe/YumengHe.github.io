@@ -61,12 +61,39 @@ a:hover {
 }
 
 .projects-image img{
+    display: block; /* remove baseline gap below inline image */
     width: 200px;
     height: auto; 
     object-fit: contain; 
     margin-right: 1%;
     border-radius: 10px; /* rounder */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* shadow */
+}
+
+.experience-image img{
+    display: block; /* remove baseline gap below inline image */
+    width: 80px;
+    height: auto;
+    object-fit: contain;
+    margin-right: 1%;
+    border-radius: 10px; /* rounder */
+    /* shadow */
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  */
+}
+
+.experience-text {
+    flex: 1;
+}
+
+.experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+.experience-date {
+    white-space: nowrap;
 }
 
 .teaser-image img{
@@ -79,6 +106,7 @@ a:hover {
 }
 
 .projects-image video{
+    display: block; /* remove baseline gap below inline video */
     width: 200px;
     height: auto; 
     object-fit: contain; 
