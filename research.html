@@ -1,0 +1,1094 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yumeng He · Research Overview</title>
+<link rel="icon" type="image/x-icon" href="images/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400&family=Arimo:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--chrome:#1f2329;--chrome-fg:#e8eaed;--chrome-dim:#9aa0a6;--accent:#5b8def;}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--chrome);color:var(--chrome-fg);font-family:Arimo,Arial,sans-serif;overflow:hidden}
+#stage{position:absolute;inset:0 0 48px 0;display:flex;align-items:center;justify-content:center}
+body.notes #stage{bottom:calc(48px + 30vh)}
+body.fs #stage{bottom:0}
+#deck{position:relative;width:960px;height:540px;transform-origin:center center;flex:none}
+.slide{position:absolute;inset:0;width:960px;height:540px;overflow:hidden;display:none;box-shadow:0 8px 40px rgba(0,0,0,.45);
+  color:#1f2933;font-family:'Times New Roman',Tinos,serif;line-height:1.15}
+.slide.on{display:block}
+.el{position:absolute;margin:0}
+.sh{overflow:visible}
+.tx{position:absolute;display:flex;flex-direction:column}
+.tx p{margin:0;white-space:pre-wrap;overflow-wrap:break-word}
+.bul{position:absolute;top:0}
+sub{font-size:70%;vertical-align:-0.25em;line-height:0}
+sub span{font-size:inherit!important}
+.pnum{position:absolute;right:28px;bottom:16px;font:14px 'Times New Roman',Tinos,serif;color:#5f6b7a;pointer-events:none}
+.lines{position:absolute;inset:0;width:960px;height:540px;pointer-events:none;overflow:visible}
+.tb{border-collapse:collapse;table-layout:fixed}
+.tb td{vertical-align:top;padding:6px 9.6px;border-bottom:1px solid #c5cbd3}
+.tb tr:first-child td{border-bottom:1.5px solid #1f2933}
+.tb td p{margin:0}
+/* ---- entrance animations: restart whenever a slide becomes visible ---- */
+.slide [data-s]:not(.in){visibility:hidden}
+.slide [data-o].gone{opacity:0;visibility:hidden}
+.slide.on [data-o].gone:not(.gone-now){visibility:visible;animation:aOut .45s ease both}
+@keyframes aOut{from{opacity:1}to{opacity:0;visibility:hidden}}
+.thumb [data-o],#pnextBox [data-o]{visibility:hidden!important}
+.slide.on .a.in{animation:var(--fx) .6s cubic-bezier(.2,.75,.25,1) both;animation-delay:var(--d,0s)}
+.slide.on .a.in.instant{animation:none}
+.fx-fade{--fx:aFade}.fx-up{--fx:aUp}.fx-down{--fx:aDown}.fx-left{--fx:aLeft}.fx-right{--fx:aRight}
+.fx-pop{--fx:aPop}.fx-draw{--fx:aDraw}.fx-growx{--fx:aGrowX;transform-origin:left center}.fx-growy{--fx:aGrowY;transform-origin:center bottom}
+.slide.on .fx-growx,.slide.on .fx-growy{animation-duration:.7s}
+.slide.on .fx-draw.in{animation-duration:.8s;animation-timing-function:ease-in-out}
+@keyframes aDraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes aFade{from{opacity:0}to{opacity:1}}
+@keyframes aUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes aDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+@keyframes aLeft{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
+@keyframes aRight{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+@keyframes aPop{0%{opacity:0;transform:scale(.5)}70%{opacity:1;transform:scale(1.06)}100%{opacity:1;transform:none}}
+@keyframes aGrowX{from{opacity:.2;transform:scaleX(0)}to{opacity:1;transform:none}}
+@keyframes aGrowY{from{opacity:.2;transform:scaleY(0)}to{opacity:1;transform:none}}
+body.noanim .slide.on,body.noanim .slide.on .a.in,.thumb .slide .a,.thumb .slide{animation:none!important}
+.thumb .slide [data-s]{visibility:visible!important}
+@media (prefers-reduced-motion:reduce){.slide.on,.slide.on .a.in{animation:none!important}}
+#bar{position:absolute;left:0;right:0;bottom:0;height:48px;display:flex;align-items:center;gap:8px;padding:0 12px;
+  background:#16191d;border-top:1px solid #2c3138;font-size:13px}
+body.fs #bar{display:none}
+#bar button{background:transparent;border:1px solid #3a4048;color:var(--chrome-fg);border-radius:6px;height:32px;min-width:32px;
+  padding:0 10px;cursor:pointer;font:inherit}
+#bar button:hover{background:#2a2f36}
+#bar button.act{border-color:var(--accent);color:#fff;background:#24324d}
+#steps{display:flex;gap:4px;align-items:center;min-width:0}
+#steps i{width:6px;height:6px;border-radius:50%;background:#3a4048}
+#steps i.on{background:var(--accent)}
+#count{min-width:64px;text-align:center;color:var(--chrome-dim);font-variant-numeric:tabular-nums}
+#prog{flex:1;height:4px;background:#2c3138;border-radius:2px;overflow:hidden}
+#prog i{display:block;height:100%;background:var(--accent);width:0;transition:width .2s}
+#hint{color:var(--chrome-dim);white-space:nowrap}
+#notes{position:absolute;left:0;right:0;bottom:48px;height:30vh;display:none;padding:14px 20px;overflow:auto;
+  background:#191c20;border-top:1px solid #2c3138;font-size:16px;line-height:1.55;color:#d5d8dc}
+#notes h4{margin:0 0 6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--chrome-dim);font-weight:700}
+body.notes #notes{display:block}
+body.fs #notes{display:none}
+#grid{position:absolute;inset:0;display:none;overflow:auto;padding:24px;background:var(--chrome);z-index:5}
+body.grid #grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;align-content:start}
+.thumb{position:relative;aspect-ratio:16/9;cursor:pointer;border-radius:4px;overflow:hidden;outline:2px solid transparent}
+.thumb:hover,.thumb.cur{outline-color:var(--accent)}
+.thumb .slide{display:block;transform-origin:0 0;box-shadow:none}
+.thumb b{position:absolute;left:6px;bottom:4px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;padding:1px 6px;border-radius:3px}
+/* ---- presenter view (opened with P, synced with the audience window) ---- */
+#toast{position:fixed;left:50%;top:18px;transform:translate(-50%,-12px);max-width:min(720px,90vw);padding:10px 16px;border-radius:8px;background:#2a3140;color:#fff;font-size:14px;line-height:1.4;box-shadow:0 6px 24px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:50}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+#pstepbar{display:none}
+body.presenter #pstepbar{display:flex;align-items:center;gap:14px;position:sticky;top:-12px;margin:-12px -18px 12px;padding:12px 18px;
+  background:#20262f;border-bottom:1px solid #2c3138;z-index:2}
+#pstepdots{display:flex;gap:7px;flex-wrap:wrap;max-width:55%}
+#pstepdots i{width:14px;height:14px;border-radius:50%;border:2px solid #5b8def;box-sizing:border-box}
+#pstepdots i.done{background:#5b8def}
+#psteptext{font-size:20px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums}
+#psteptext small{display:block;font-size:13px;font-weight:400;color:var(--chrome-dim)}
+#pstepbar.last{background:#1f2e25}
+#pstepbar.last #psteptext{color:#8fd19e}
+#notesText .seg{transition:opacity .2s,color .2s}
+#notesText .seg.past{opacity:.38}
+#notesText .seg.future{opacity:.6}
+#notesText .seg.cur{opacity:1;color:#fff}
+#notesText .star{display:inline-block;margin:0 4px 0 2px;padding:0 6px;border-radius:9px;font-size:.72em;line-height:1.5;
+  vertical-align:.12em;color:#1b1e23;background:#f5c542;font-weight:700}
+#notesText .star.past{opacity:.35}
+#notesText .star.future{background:#6b6040;color:#e8e2cc}
+#pbar,#pnext{display:none}
+body.presenter #bar{display:none}
+body.presenter #pbar{display:flex;position:absolute;left:0;right:0;top:0;height:56px;align-items:center;gap:14px;padding:0 18px;
+  background:#16191d;border-bottom:1px solid #2c3138;font-size:14px}
+body.presenter #stage{inset:56px 38% 0 0}
+body.presenter #pnext{display:flex;flex-direction:column;position:absolute;right:0;top:56px;width:38%;height:36vh;padding:12px 18px 8px;gap:8px}
+body.presenter #notes{display:block;left:62%;right:0;top:calc(56px + 36vh);bottom:0;height:auto;border-top:1px solid #2c3138;
+  font-size:var(--nfs,22px);line-height:1.5;padding:12px 18px 24px}
+#pbar .big{font-size:22px;font-variant-numeric:tabular-nums;color:#fff}
+#pbar .dim{color:var(--chrome-dim)}
+#pbar button{background:transparent;border:1px solid #3a4048;color:var(--chrome-fg);border-radius:6px;height:32px;min-width:32px;padding:0 10px;cursor:pointer;font:inherit}
+#pbar button:hover{background:#2a2f36}
+#pbar .sp{flex:1}
+#ptimer{cursor:pointer}
+#pnextLab{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--chrome-dim);font-weight:700}
+#pnextBox{position:relative;flex:1;min-height:0}
+#pnextBox .frame{position:absolute;left:0;top:0;width:960px;height:540px;transform-origin:0 0;border-radius:4px;overflow:hidden;outline:1px solid #3a4048}
+#pnextBox .slide{display:block;box-shadow:none}
+#pnextBox .slide [data-s]{visibility:visible!important;animation:none!important}
+#pnextBox .end{color:var(--chrome-dim);font-size:18px;padding-top:20px}
+@media (max-width:1180px){#hint{display:none}}
+@media (max-width:640px){#hint{display:none}#bar{gap:4px;padding:0 6px}#bar button{padding:0 7px}}
+@media print{
+  @page{size:960px 540px;margin:0}
+  html,body{overflow:visible;height:auto;background:#fff}
+  #bar,#notes,#grid{display:none!important}
+  #stage{position:static;display:block}
+  #deck{transform:none!important;width:auto;height:auto}
+  .slide{position:relative;display:block;box-shadow:none;page-break-after:always}
+  .slide,.slide .a{animation:none!important}
+  .slide [data-s]{visibility:visible!important}
+  .slide [data-o]{visibility:hidden!important}
+}
+</style>
+</head>
+<body>
+<div id="stage"><div id="deck">
+<!-- ===== slide styling (deck runtime CSS comes from the template; this only styles content) ===== -->
+<style>
+.slide{font-family:'Times New Roman',Tinos,serif;color:#1f2933}
+.ttl{position:absolute;left:48px;top:30px;width:864px;font-size:38px;line-height:1.1}
+.ttl small{display:block;font:700 12px Arimo,Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6b7280;margin-bottom:8px}
+.ttl small.real{color:#4f7a68}.ttl small.sim{color:#4b6a8c}
+.ttl .sub{display:block;font-size:18px;color:#4b6a8c;margin-top:8px}
+.real{color:#4f7a68}.sim{color:#4b6a8c}
+.ab{position:absolute}
+ul.pts{margin:0;padding-left:22px;font-size:18px;line-height:1.35}
+ul.pts li{margin-bottom:10px}
+ul.pts li b{color:#1f2933}
+.tag{display:inline-block;font:700 11px Arimo,Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:4px;background:#eef1f5;color:#4b6a8c;margin-right:6px;vertical-align:middle}
+.tag.gold{background:#f6f1e6;color:#8a6d3b}
+.tag.real{background:#e9f1ed;color:#4f7a68}
+.fig{position:absolute;object-fit:cover;border-radius:6px;box-shadow:0 2px 10px rgba(0,0,0,.12);background:#fff}
+.fig.plain{box-shadow:none;object-fit:contain;border:1px solid #e3e6ea}
+.cap{position:absolute;font:13px Arimo,Arial,sans-serif;color:#6b7280;line-height:1.3}
+.card{position:absolute;background:#f7f8fa;border:1px solid #e3e6ea;border-radius:10px;padding:12px 16px}
+.card h4{margin:0 0 4px;font-size:19px;font-weight:700}
+.card h4 .k{font:700 10px Arimo,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#4b6a8c;display:block;margin-bottom:2px}
+.card p{margin:0;font-size:15px;line-height:1.35;color:#3c4350}
+.card.gold{background:#faf7f0;border-color:#e4d8bd}
+/* education timeline */
+.edu{position:absolute;left:48px;top:105px;width:864px}
+.edu .row{position:relative;display:grid;grid-template-columns:150px 40px 1fr;align-items:start;padding-bottom:26px}
+.edu .row::before{content:"";position:absolute;left:167px;top:14px;bottom:0;width:2px;background:#dde1e6}
+.edu .row:last-child::before{display:none}
+.edu .y{font:700 12px Arimo,Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;text-align:right;padding:6px 14px 0 0}
+.edu .dot{width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid #4b6a8c;margin:4px 0 0 13px;position:relative;z-index:1}
+.edu .row.now .dot{background:#4b6a8c}
+.edu .deg{display:inline-block;font:700 13px Arimo,Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:#4b6a8c;border-radius:4px;padding:4px 10px;margin-right:12px;vertical-align:4px}
+.edu .s{font-size:24px;font-weight:700;line-height:1.1}
+.edu .d{font-size:15px;color:#4b6a8c;margin:2px 0 4px}
+.edu .r{font-size:15px;color:#3c4350;line-height:1.35}
+.edu .also{margin-top:6px}
+.edu .also span{display:inline-block;font:12px Arimo,Arial,sans-serif;color:#6b7280;border:1px solid #e3e6ea;border-radius:999px;padding:1px 8px;margin:2px 4px 0 0;background:#fff}
+/* questions */
+.ri{position:absolute;left:40px;right:40px;top:128px;bottom:124px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:end}
+.ri .two{display:flex;flex-direction:column;gap:8px}
+.q{background:#eef2f7;border:1.5px solid #5b7391;border-radius:8px;padding:10px 12px 9px;display:flex;flex-direction:column}
+.q.real{background:#ebf2ee;border-color:#5e8372}
+.q .k{font:700 10px Arimo,Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#5b7391;margin-bottom:5px}
+.q.real .k{color:#5e8372}
+.q h4{margin:0 0 5px;font-size:15.5px;line-height:1.15;color:#1f2933}
+.q p{margin:0;font-size:12.5px;line-height:1.35;color:#3c4350}
+.q .w{display:block;margin-top:7px;font:10.5px Arimo,Arial,sans-serif;color:#5f6b7a;line-height:1.35}
+/* overview map */
+.ov{position:absolute;left:40px;right:40px;top:96px;bottom:120px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.ov .col{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-content:end}
+.blk{position:relative;aspect-ratio:1/1;display:flex;flex-direction:column;border:1.5px solid #cfd4db;border-radius:8px;background:#fbfbfc;overflow:hidden;font-family:Arimo,Arial,sans-serif;text-align:left}
+.blk img{display:block;width:100%;height:56%;object-fit:cover;flex:none}
+.blk .n{font-size:10.5px;font-weight:700;padding:4px 6px 0;color:#1f2933;}
+.blk.early img{filter:grayscale(.55);opacity:.85}
+.blk.early .n{color:#5f6b7a;line-height:1.15;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.blk .v{font-size:8.5px;color:#5f6b7a;padding:1px 6px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:auto}
+.blk.paper{border-color:#4b6a8c;border-width:2px;background:#e4ebf4}
+.blk.research{border-color:#5e8372;background:#ebf2ee}
+.blk.ongo{border-color:#9aa4b2;border-style:dashed;background:#fff}
+.blk.ongo .ph{height:56%;display:grid;place-items:center;color:#9aa4b2;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;text-align:center;padding:0 6px}
+.blk.lead{border-color:#a3845a;border-width:2px;background:#f6efdf}
+.blk.lead .n{font-size:11px}
+.blk.lead .n::before{content:"★ ";color:#a3845a}
+.blk.lead.research{border-color:#a3845a;background:#f6efdf}
+.blk.ongo.lead{border-style:dashed;border-color:#a3845a;background:#fbf7ee}
+.blk.ongo.lead .ph{color:#a3845a}
+section[data-i="map"] .blk.early{display:none}
+section[data-i="map"].more .blk.early{display:flex}
+.morebtn{position:absolute;right:48px;top:72px;font:700 10.5px Arimo,Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;border:1px solid #c9ced6;border-radius:999px;padding:5px 12px;background:#fff;color:#4b5563;cursor:pointer;line-height:1}
+.morebtn:hover{border-color:#1f2933;color:#1f2933}
+section[data-i="map"].more .morebtn{background:#eef1f5;border-color:#9aa4b2}
+@media print{section[data-i="map"] .blk.early{display:flex}.morebtn{display:none}}
+.legend{position:absolute;right:48px;top:48px;display:flex;gap:14px;font:10.5px Arimo,Arial,sans-serif;color:#5f6b7a;align-items:center}
+.legend span::before{content:"";display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-2px;border:1.5px solid #cfd4db;background:#fbfbfc}
+.legend .l-lead::before{border-color:#a3845a;background:#f6efdf}
+.legend .l-paper::before{border-color:#4b6a8c;border-width:2px;background:#e4ebf4}
+.legend .l-research::before{border-color:#5e8372;background:#ebf2ee}
+.legend .l-ongo::before{border-style:dashed;background:#fff}
+.legend .l-arrow::before{content:"\2192";border:none;background:none;width:auto;height:auto;color:#4b5563;font-size:14px;font-weight:700;line-height:1;vertical-align:-1px}
+.arrows{position:absolute;left:0;top:0;width:960px;height:540px;pointer-events:none;overflow:visible;z-index:3}
+.arrows .halo{fill:none;stroke:#fff;stroke-width:6;stroke-linecap:round}
+.arrows .ln{fill:none;stroke:#4b5563;stroke-width:1.75;stroke-linecap:butt}
+.arrows .hd{fill:#4b5563;stroke:none}
+.axis{position:absolute;left:40px;right:52px;bottom:88px;height:3px;border-radius:2px;background:linear-gradient(90deg,#5e8372 0 20%,#5b7391 30% 70%,#5e8372 80% 100%);opacity:.6}
+.axis::after{content:"";position:absolute;right:-12px;top:-5px;border:6px solid transparent;border-left:10px solid #5e8372}
+.stations{position:absolute;left:40px;right:40px;bottom:30px;display:grid;grid-template-columns:repeat(4,1fr);text-align:center;font-family:Arimo,Arial,sans-serif}
+.st .dot{width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid #5b7391;margin:0 auto 2px;position:relative;top:-8px}
+.st.real .dot{border-color:#5e8372}
+.st .k{font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#5b7391}
+.st.real .k{color:#5e8372}
+.st .n{font-family:'Times New Roman',Tinos,serif;font-size:18px;font-weight:700;color:#1f2933;line-height:1.1}
+.st .t{font-size:10px;color:#6b7280}
+.caps{position:absolute;left:40px;right:40px;bottom:4px;display:flex;justify-content:space-between;font:700 10.5px Arimo,Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase}
+.caps span{display:inline-block;padding:3px 11px;border-radius:999px;background:#e8edf4;color:#4b6a8c;border:1px solid #c9d4e2}
+.caps .r{background:#e3eee8;color:#4f7a68;border-color:#bfd3c8}
+section[data-i="map"] .pnum,section[data-i="interests"] .pnum{bottom:auto;top:14px}
+/* "also" grid */
+.also-grid{position:absolute;left:48px;top:100px;width:864px;display:grid;grid-template-columns:repeat(5,160px);gap:16px}
+.tile{border:1px solid #e3e6ea;border-radius:8px;overflow:hidden;background:#fff}
+.tile img{display:block;width:100%;height:92px;object-fit:cover}
+.tile .n{font-size:14px;font-weight:700;padding:6px 8px 0;line-height:1.15}
+.tile .v{font:11px Arimo,Arial,sans-serif;color:#6b7280;padding:2px 8px 7px}
+/* next */
+.nx{position:absolute;width:420px;height:150px;background:#f7f8fa;border:1px solid #e3e6ea;border-radius:10px;padding:14px 16px 14px 60px}
+.nx .num{position:absolute;left:16px;top:14px;width:32px;height:32px;border-radius:50%;background:#2f4a68;color:#fff;font:700 15px Arimo,Arial,sans-serif;display:grid;place-items:center}
+.nx h4{margin:0 0 4px;font-size:20px}
+.nx p{margin:0;font-size:15px;line-height:1.35;color:#3c4350}
+.big{font-size:64px;line-height:1.05;font-weight:700}
+.who{position:absolute;left:48px;top:330px;font-size:20px;line-height:1.5}
+.who b{font-size:24px}
+.who .dim{color:#6b7280;font-size:17px}
+.photo{position:absolute;right:48px;top:48px;width:150px;height:150px;border-radius:50%;object-fit:cover;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.links{position:absolute;left:48px;top:300px;font-size:18px;line-height:1.7;color:#3c4350}
+.links b{color:#2f4a68}
+</style>
+
+<!-- ===================== 1. TITLE ===================== -->
+<section class="slide" style="background:#fff" data-i="title" data-steps="0">
+  <img class="photo a fx-fade" data-s="0" src="images/my_photo_2.JPG" alt="">
+  <div class="ab a fx-down" data-s="0" style="left:48px;top:120px;width:760px">
+    <div class="big"><span class="real">Real</span> &rarr; <span class="sim">Sim</span> &rarr; <span class="real">Real</span></div>
+    <div style="font-size:22px;color:#4b6a8c;margin-top:16px;line-height:1.35;width:640px">Physically correct assets, simulation that moves them right,<br>and the loop back to robots.</div>
+  </div>
+  <div class="who a fx-up" data-s="0" style="--d:.15s">
+    <b>Yumeng He</b><br>
+    PhD student, UCLA AIVC Lab &middot; advised by Chenfanfu Jiang and Demetri Terzopoulos<br>
+    <span class="dim">Research overview &middot; October 2026 &middot; heyumeng.com</span>
+  </div>
+  <div class="pnum">1</div>
+</section>
+
+<!-- ===================== 2. EDUCATION ===================== -->
+<section class="slide" style="background:#fff" data-i="edu" data-steps="0">
+  <div class="ttl a fx-down" data-s="0"><small>Education</small>Background</div>
+  <div class="edu">
+    <div class="row now a fx-up" data-s="0">
+      <div class="y">2026 &ndash; present</div><div class="dot"></div>
+      <div><div class="s"><span class="deg">PhD</span>University of California, Los Angeles</div>
+        <div class="d">PhD in Computer Science &middot; AIVC Lab, co-advised by Prof. Chenfanfu Jiang and Prof. Demetri Terzopoulos</div>
+        <div class="r">Reviewer for SIGGRAPH Asia, Pacific Graphics, TVCG and CAVW. Mentoring three master&rsquo;s students at UCLA and USC.</div>
+        <div class="also"><span>Special session organizer, ACM SIGCSE 2026</span></div></div>
+    </div>
+    <div class="row a fx-up" data-s="0">
+      <div class="y">2024 &ndash; 2026</div><div class="dot"></div>
+      <div><div class="s"><span class="deg">Master</span>University of Southern California</div>
+        <div class="d">MS in Computer Science, thesis track &middot; advised by Prof. Jernej Barbi&#269;</div>
+        <div class="r">Thesis on volumetrically consistent thin shells. From June 2025 a visiting student at UCLA AIVC, where SPARK, SeeClear, Fishbone and ArticulateArena were done.</div>
+        <div class="also"><span>USC RESL, research assistant (Jul &ndash; Dec 2025)</span><span>UCLA AIVC, visiting student (Jun 2025 &ndash; Jul 2026)</span></div></div>
+    </div>
+    <div class="row a fx-up" data-s="0">
+      <div class="y">2019 &ndash; 2024</div><div class="dot"></div>
+      <div><div class="s"><span class="deg">Bachelor</span>University of Toronto</div>
+        <div class="d">Honours BSc with High Distinction &middot; Computer Science and Mathematics double major</div>
+        <div class="r">The analysis and linear-algebra background I still lean on for simulation and geometry. Includes a one-year industry internship.</div>
+        <div class="also"><span>Dean&rsquo;s List Scholar (2020 &ndash; 24)</span><span>HCL Canada, software developer intern (2022 &ndash; 23)</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3. THREE QUESTIONS ===================== -->
+<section class="slide" style="background:#fff" data-i="interests" data-steps="0">
+  <div class="ttl a fx-down" data-s="0"><small>Research interests</small>Physical AI, between vision, graphics and robotics</div>
+  <div class="ab a fx-fade" data-s="0" style="left:48px;top:98px;width:864px;font-size:15.5px;line-height:1.4;color:#3c4350">
+    Robot learning is limited by data that is scarce and physically inaccurate. Everything I do sits on one loop: real &rarr; sim &rarr; real.
+  </div>
+  <div class="ri a fx-up" data-s="0">
+    <div class="q real"><div class="k">01 &middot; See</div><h4>Real-to-sim perception</h4><p>Seeing what cameras get wrong, and carrying a real object into the simulator with its geometry intact.</p><span class="w">SeeClear &middot; SPARK</span></div>
+    <div class="two">
+      <div class="q"><div class="k">02 &middot; Build</div><h4>Object &amp; scene generation</h4><p>Physically plausible, controllable 3D objects and scenes.</p><span class="w">Fishbone &middot; Birth of a Painting &middot; VoroLight</span></div>
+      <div class="q"><div class="k">03 &middot; Build</div><h4>Articulated &amp; kinematic assets</h4><p>Parts + joints: sim-ready articulated objects, and a metric for their motion.</p><span class="w">SPARK &middot; SPARK+ &middot; ArticulateArena</span></div>
+    </div>
+    <div class="q"><div class="k">04 &middot; Simulate</div><h4>Physics-based simulation</h4><p>Thin shells, soft bodies and rigid dynamics that move assets the way the real thing moves.</p><span class="w">VC Shells &middot; VABD</span></div>
+    <div class="q real"><div class="k">05 &middot; Act</div><h4>Policy learning</h4><p>Training and evaluating robot policies on generated assets, and bringing them back to hardware.</p><span class="w">MPC Is All You Need</span></div>
+  </div>
+  <div class="axis a fx-growx" data-s="0"></div>
+  <div class="stations a fx-fade" data-s="0">
+    <div class="st real"><div class="dot"></div><div class="k">Real &middot; 1</div><div class="n">See</div><div class="t">Perceive what cameras get wrong</div></div>
+    <div class="st"><div class="dot"></div><div class="k">Sim &middot; 2</div><div class="n">Build</div><div class="t">From one image to many sim-ready assets</div></div>
+    <div class="st"><div class="dot"></div><div class="k">Sim &middot; 3</div><div class="n">Simulate</div><div class="t">Get the physics right</div></div>
+    <div class="st real"><div class="dot"></div><div class="k">Real &middot; 4</div><div class="n">Act</div><div class="t">Close the loop on hardware</div></div>
+  </div>
+  <div class="caps a fx-fade" data-s="0"><span class="r">Real world</span><span>Simulation</span><span class="r">Real world</span></div>
+  <div class="pnum">3</div>
+</section>
+
+<!-- ===================== 4. OVERVIEW MAP ===================== -->
+<section class="slide" style="background:#fff" data-i="map" data-steps="0">
+  <div class="ttl a fx-down" data-s="0"><small>The storyline</small>One loop, four stages</div>
+  <div class="legend a fx-fade" data-s="0"><span class="l-lead">★ Selected work</span><span class="l-paper">Paper</span><span>Course project</span><span class="l-ongo">Ongoing</span><span class="l-arrow">follow-up</span></div>
+  <button class="morebtn a fx-fade" data-s="0" id="moreBtn" onclick="toggleEarly(event)">+ Show course projects (5)</button>
+  <div class="ov">
+    <div class="col a fx-up" data-s="0">
+      <div class="blk paper" data-p="ssdualflow" onclick="blkClick(event, 'ssdualflow')"><img src="images/CDUT.png" alt=""><div class="n">SS-DualFlow</div><div class="v">ASOC 2024</div></div>
+      <div class="blk paper" data-p="vishint" onclick="blkClick(event, 'vishint')"><img src="images/VisHintPrompt.png" alt=""><div class="n">VisHintPrompt</div><div class="v">2025</div></div>
+      <div class="blk lead" data-p="seeclear" onclick="blkClick(event, 'seeclear')"><img src="images/SeeClear.png" alt=""><div class="n">SeeClear</div><div class="v">ECCV 2026</div></div>
+    </div>
+    <div class="col a fx-up" data-s="0">
+      <div class="blk paper" data-p="vorolight" onclick="blkClick(event, 'vorolight')"><img src="images/vorolight2.png" alt=""><div class="n">VoroLight</div><div class="v">arXiv 2025</div></div>
+      <div class="blk paper" data-p="painting" onclick="blkClick(event, 'painting')"><img src="images/painting.png" alt=""><div class="n">Birth of a Painting</div><div class="v">TOG / SIGGRAPH 2026</div></div>
+      <div class="blk lead" data-p="spark" onclick="blkClick(event, 'spark')"><img src="images/SPARK_teaser.png" alt=""><div class="n">SPARK</div><div class="v">CVPR 2026 Oral</div></div>
+      <div class="blk lead" data-p="arena" onclick="blkClick(event, 'arena')"><img src="images/ArticulateArena.png" alt=""><div class="n">ArticulateArena</div><div class="v">arXiv 2026</div></div>
+      <div class="blk ongo lead" data-p="sparkplus" onclick="blkClick(event, 'sparkplus')"><div class="ph">in progress</div><div class="n">SPARK+</div><div class="v">Ongoing</div></div>
+      <div class="blk lead" data-p="fishbone" onclick="blkClick(event, 'fishbone')"><img src="images/Fishbone.png" alt=""><div class="n">Fishbone</div><div class="v">arXiv 2026</div></div>
+    </div>
+    <div class="col a fx-up" data-s="0">
+      <div class="blk early" data-p="fluid" onclick="blkClick(event, 'fluid')"><img src="images/research/Fluid_thumb.png" alt=""><div class="n">Fluid solvers</div><div class="v">USC CSCI 580</div></div>
+      <div class="blk early" data-p="jello" onclick="blkClick(event, 'jello')"><img src="projects/CSCI520/CSCI520A1.jpg" alt=""><div class="n">Jello cube</div><div class="v">USC CSCI 520</div></div>
+      <div class="blk early" data-p="anim" onclick="blkClick(event, 'anim')"><img src="images/research/IK_thumb.png" alt=""><div class="n">IK &amp; mocap</div><div class="v">USC CSCI 520</div></div>
+      <div class="blk early" data-p="render" onclick="blkClick(event, 'render')"><img src="images/CSCI420-A3.png" alt=""><div class="n">Rendering basics</div><div class="v">USC CSCI 420</div></div>
+      <div class="blk paper" data-p="vabd" onclick="blkClick(event, 'vabd')"><img src="images/VABD.png" alt=""><div class="n">VABD</div><div class="v">TOG / SIGGRAPH Asia 2026</div></div>
+      <div class="blk paper" data-p="vcshell" onclick="blkClick(event, 'vcshell')"><img src="images/VCShell2.png" alt=""><div class="n">VC Shells (thesis)</div><div class="v">TOG / SIGGRAPH Asia 2026</div></div>
+    </div>
+    <div class="col a fx-up" data-s="0">
+      <div class="blk early" data-p="vla" onclick="blkClick(event, 'vla')"><img src="projects/CSCI699/pipeline.png" alt=""><div class="n">VLA action heads</div><div class="v">USC CSCI 699</div></div>
+      <div class="blk paper" data-p="stringart" onclick="blkClick(event, 'stringart')"><img src="images/stringart.png" alt=""><div class="n">String art</div><div class="v">SIGGRAPH Asia Poster 2026</div></div>
+      <div class="blk paper" data-p="mpc" onclick="blkClick(event, 'mpc')"><img src="images/research/MPC_slide.png" alt=""><div class="n">MPC Is All You Need</div><div class="v">USC RESL, 2025</div></div>
+    </div>
+  </div>
+  <svg class="arrows a fx-fade" data-s="0" viewBox="0 0 960 540" aria-hidden="true"></svg>
+  <div class="axis a fx-growx" data-s="0"></div>
+  <div class="stations a fx-fade" data-s="0">
+    <div class="st real"><div class="dot"></div><div class="k">Real &middot; 1</div><div class="n">See</div><div class="t">Perceive what cameras get wrong</div></div>
+    <div class="st"><div class="dot"></div><div class="k">Sim &middot; 2</div><div class="n">Build</div><div class="t">From one image to many sim-ready assets</div></div>
+    <div class="st"><div class="dot"></div><div class="k">Sim &middot; 3</div><div class="n">Simulate</div><div class="t">Get the physics right</div></div>
+    <div class="st real"><div class="dot"></div><div class="k">Real &middot; 4</div><div class="n">Act</div><div class="t">Close the loop on hardware</div></div>
+  </div>
+  <div class="caps a fx-fade" data-s="0"><span class="r">Real world</span><span>Simulation</span><span class="r">Real world</span></div>
+  <div class="pnum">4</div>
+</section>
+
+<!-- ===================== 5. WHAT'S NEXT ===================== -->
+<section class="slide" style="background:#fff" data-i="next" data-steps="3">
+  <div class="ttl a fx-down" data-s="0"><small>What's next</small>Object &rarr; benchmark &rarr; policy</div>
+  <div class="ab a fx-fade" data-s="0" style="left:48px;top:98px;width:864px;font-size:16px;color:#3c4350">The "next steps" slide of my SPARK talk had four items. Two became papers (ArticulateArena, Fishbone). The rest is where I am heading.</div>
+  <div class="nx a fx-up" data-s="1" style="left:48px;top:140px;width:864px;height:105px"><div class="num">1</div><h4>Physics-grounded, controllable generation</h4><p>Generative models whose outputs obey kinematics and material behaviour, including 3D-guided video generation.</p></div>
+  <div class="nx a fx-up" data-s="2" style="left:48px;top:262px;width:864px;height:105px"><div class="num">2</div><h4>Benchmarks that measure motion, not representation</h4><p>Growing ArticulateArena from a metric into a full evaluation suite with a cleaner, larger dataset than PartNet-Mobility.</p></div>
+  <div class="nx a fx-up" data-s="3" style="left:48px;top:384px;width:864px;height:105px"><div class="num">3</div><h4>Closing the loop with policies</h4><p>Training VLA policies on SPARK and Fishbone assets and checking whether asset quality and diversity actually transfer to the real robot.</p></div>
+  <div class="pnum">5</div>
+</section>
+</div></div>
+<div id="notes"><div id="pstepbar"><div id="pstepdots"></div><div id="psteptext"></div></div><h4>Speaker notes</h4><div id="notesText"></div></div>
+<div id="grid"></div>
+<div id="pbar">
+  <span class="big" id="pcount"></span><span id="psteps" class="dim"></span>
+  <span class="sp"></span>
+  <span class="dim">Elapsed</span><span class="big" id="ptimer" title="Click to reset">00:00</span>
+  <span class="dim">Clock</span><span class="big" id="pclock"></span>
+  <button id="pSmaller" title="Smaller notes">A−</button><button id="pBigger" title="Larger notes">A+</button>
+</div>
+<div id="pnext"><div id="pnextLab">Next</div><div id="pnextBox"></div></div>
+<div id="bar">
+  <button id="prev" title="Previous (←)" aria-label="Previous slide">‹</button>
+  <span id="count"></span>
+  <button id="next" title="Next (→)" aria-label="Next step">›</button>
+  <span id="steps" aria-hidden="true"></span>
+  <div id="prog"><i></i></div>
+  <span id="hint">← → step · Shift+← → slide · P presenter · N notes · G overview · A animation · F fullscreen</span>
+  <button id="bNotes" title="Speaker notes (N)">Notes</button>
+  <button id="bPres" title="Open or close the presenter view (P)">Presenter</button>
+  <button id="bGrid" title="Overview (G)">Grid</button>
+  <button id="bAnim" class="act" title="Animations on/off (A)">Anim</button>
+  <button id="bFs" title="Fullscreen (F)">⛶</button>
+</div>
+<!-- ===== project detail overlay: click a block on the map (slide 4) or a tile (slide 12) ===== -->
+<style>
+.blk[data-p],.tile[data-p]{cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}
+.blk[data-p]:hover,.tile[data-p]:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.16);z-index:2}
+#pm{position:fixed;inset:0;background:rgba(10,12,16,.72);z-index:60;display:none;align-items:center;justify-content:center;padding:24px}
+#pm.open{display:flex}
+#pm .box{background:#fff;color:#1f2933;border-radius:14px;width:min(1240px,96vw);max-height:92vh;overflow:auto;box-shadow:0 30px 80px rgba(0,0,0,.5);position:relative;font-family:'Times New Roman',Tinos,serif;line-height:1.3}
+#pm .hd{padding:26px 32px 0}
+#pm .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+#pm .tag{display:inline-block;font:700 11px Arimo,Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:4px;background:#eef1f5;color:#4b6a8c}
+#pm .tag.gold{background:#f6f1e6;color:#8a6d3b}
+#pm .tag.real{background:#e9f1ed;color:#4f7a68}
+#pm h3{margin:0 0 6px;font-size:28px;line-height:1.15;font-weight:700}
+#pm .au{font:14px Arimo,Arial,sans-serif;color:#6b7280;margin-bottom:4px}
+#pm .role{font-size:15px;margin:0}
+#pm .bd{padding:18px 32px 30px;display:grid;grid-template-columns:1.1fr 1fr;gap:26px}
+#pm .bd.one{grid-template-columns:1fr}
+#pm figure{margin:0}
+#pm figure img,#pm figure video{width:100%;border-radius:8px;border:1px solid #e3e6ea;background:#fff;display:block}
+#pm figure .row{display:flex;gap:8px}
+#pm figure .row>*{flex:1;min-width:0}
+#pm .wide{padding:18px 32px 0}
+#pm .wide figure+figure{margin-top:14px}
+#pm .bd+.wide{padding-top:0;padding-bottom:26px}
+#pm figure+figure{margin-top:12px}
+#pm figcaption{font:12.5px Arimo,Arial,sans-serif;color:#6b7280;margin-top:5px}
+#pm h5{margin:0 0 6px;font:700 11px Arimo,Arial,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#6b7280}
+#pm h5.fh{margin:0 0 8px;padding-bottom:4px;border-bottom:1px solid #e3e6ea;color:#2f4a68}
+#pm figure+h5.fh{margin-top:18px}
+#pm ul{margin:0 0 16px;padding-left:18px;font-size:16px;line-height:1.4}
+#pm li{margin-bottom:6px}
+#pm .plinks{display:flex;gap:8px;flex-wrap:wrap}
+#pm .plinks a{font:700 12px Arimo,Arial,sans-serif;padding:6px 12px;border:1px solid #dde1e6;border-radius:999px;color:#2f4a68;text-decoration:none}
+#pm .plinks a:hover{border-color:#2f4a68}
+#pm .x{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;border:1px solid #dde1e6;background:#fff;cursor:pointer;font-size:18px;line-height:1;color:#1f2933}
+#pm .x:hover{border-color:#2f4a68;color:#2f4a68}
+@media (max-width:720px){#pm .bd{grid-template-columns:1fr;padding:14px 18px 18px}#pm .hd{padding:20px 18px 0}}
+@media print{#pm{display:none!important}}
+</style>
+<div id="pm" onclick="if(event.target===this)closeProject()">
+  <div class="box" role="dialog" aria-modal="true">
+    <button class="x" onclick="closeProject()" aria-label="Close">&times;</button>
+    <div class="hd" id="pmHd"></div>
+    <div class="wide" id="pmTop"></div>
+    <div class="bd" id="pmBd"></div>
+    <div class="wide" id="pmBottom"></div>
+  </div>
+</div>
+<script>
+const PROJECTS = [
+  /* ---------------- SEE ---------------- */
+  { id: 'seeclear', date: '2026-03', stage: 'see', highlight: true, feature: true,
+    title: 'SeeClear: Reliable Transparent Object Depth Estimation via Generative Opacification',
+    short: 'SeeClear', venue: 'ECCV 2026', year: 2026, kind: 'Paper',
+    authors: 'Xiaoying Wang*, Yumeng He*, Jingkai Shi*, Jiayin Lu, Yin Yang, Ying Jiang, Chenfanfu Jiang (* equal contribution)',
+    role: 'Co-first author.',
+    blurb: 'Rewrite transparent objects as opaque ones so that any monocular depth estimator works unchanged.',
+    figures: [ ['images/research/SeeClear_pipeline.png', 'Grounded SAM 2 localizes transparent regions; a diffusion inpainting model opacifies them; an off-the-shelf monocular depth estimator does the rest, unchanged.', 'wide', 'Pipeline'],
+               ['images/research/seeclear/dataset_pipeline.png', 'SeeClear-396k: 11 transparent objects, 10 scenes, shape, camera and lighting variation, rendered as paired transparent / opaque images with depth, normals and masks.', '', 'Dataset'],
+               ['images/research/seeclear/teaser.png', 'Transparent objects break depth estimators; after opacification the same estimator is stable.', '', 'Results'],
+               ['images/research/seeclear/wild15.png', 'In the wild: transparent input, opacified output, resulting depth.'],
+               ['images/research/seeclear/wild27.png', ''] ],
+    points: [
+      'Refraction and transmission violate the appearance assumptions depth networks rely on, so state-of-the-art estimators produce unstable depth on transparent materials.',
+      'Instead of retraining the depth network, we localize transparent regions and transform their refractive appearance into geometrically consistent opaque shapes with a diffusion-based opacification module.',
+      'The processed image goes into any monocular depth estimator with no retraining and no architectural changes.',
+      'To train the opacifier we built SeeClear-396k, a synthetic dataset of 396k paired transparent / opaque renderings.',
+    ],
+    talking: [
+      'Why fix the input rather than the model: it decouples us from whichever depth backbone is best this year.',
+      'The dataset is the real contribution for many people: paired transparent / opaque renderings do not exist in the wild.',
+    ],
+    links: [ ['Project page', 'https://heyumeng.com/SeeClear-web/'], ['arXiv', 'https://arxiv.org/abs/2603.19547'], ['Code', 'https://github.com/YumengHe/SeeClear'], ['Paper', 'https://link.springer.com/chapter/10.1007/978-3-032-37211-6_5'] ] },
+
+  { id: 'ssdualflow', date: '2024-05', stage: 'see', highlight: false,
+    title: 'Self-supervised Dual-layer 2D Normalizing Flow for Industrial Anomaly Detection',
+    short: 'SS-DualFlow', venue: 'ASOC 2024', year: 2024, kind: 'Paper',
+    authors: 'Zhenlian Miao, Guangzhu Chen, Xiaojuan Liao, Jiu Dai, Yumeng He',
+    role: 'Co-author, summer research assistant at CDUT (2023).',
+    blurb: 'Unsupervised defect detection and localization on MVTec AD.',
+    figures: [ ['images/CDUT.png', ''] ],
+    points: [
+      'A dual-layer 2D normalizing flow maps features to a Gaussian base to curb information loss, with an Exponential Space Attention module to focus on anomaly-salient regions.',
+      'Image-level AUROC 99.38% and pixel-level AUROC 98.38% on MVTec AD.',
+      'My first research project; it is where I learned to run a full experimental pipeline on a shared benchmark.',
+    ],
+    talking: [],
+    links: [ ['Paper', 'https://www.sciencedirect.com/science/article/pii/S1568494624007026'], ['Code', 'https://github.com/FutureIAI/SS-Dualflow'] ] },
+
+  { id: 'vishint', date: '2025-06', stage: 'see', highlight: false,
+    title: 'VisHintPrompt: A Visual Hint Prompting Strategy for Numerical Inference from Charts',
+    short: 'VisHintPrompt', venue: '2025', year: 2025, kind: 'Paper',
+    authors: 'Fengling Zheng, Yongle Peng, Zi Rong, Chenyun Cai, Yumeng He, Dekun Qian, Zhiguang Zhou, Yigang Wang, Yong Wang',
+    role: 'Co-author.',
+    blurb: 'Visual hints that help multimodal models read numbers off charts.',
+    figures: [ ['images/VisHintPrompt.png', ''] ],
+    points: [ 'A prompting strategy that overlays visual hints on charts to improve numerical inference by vision-language models.' ],
+    talking: [],
+    links: [] },
+
+  /* ---------------- BUILD ---------------- */
+  { id: 'spark', date: '2025-12', stage: 'build', highlight: true, feature: true,
+    title: 'SPARK: Sim-ready Part-level Articulated Reconstruction with VLM Knowledge',
+    short: 'SPARK', venue: 'CVPR 2026 Oral', year: 2026, kind: 'Paper',
+    badges: ['Oral, top 3.45%', 'CVPR Compute Transparency Champion'],
+    authors: 'Yumeng He*, Ying Jiang*, Jiayin Lu*, Yin Yang, Chenfanfu Jiang (* equal contribution)',
+    role: 'Co-first author and project lead.',
+    blurb: 'Single RGB image in; textured part meshes plus a URDF that loads straight into a simulator out.',
+    figures: [ ['images/research/SPARK_pipeline.png', 'Stage 1: VLM guidance proposes parts, the kinematic graph and joint types. Stage 2: part-level shape reconstruction with local, global and hierarchy attention. Stage 3: URDF optimization with differentiable forward kinematics and rendering.', 'wide', 'Pipeline'],
+               ['images/research/spark/teaser.png', 'One RGB image in; textured part meshes plus a URDF out.', '', 'Results'],
+               [['images/research/spark/demo_open.mp4', 'images/research/spark/demo_expand.mp4', 'images/research/spark/demo_geo_rotate.mp4'], 'The reconstructed asset: joints opening, exploded parts, geometry.'],
+               [['images/research/spark/wild1.mp4', 'images/research/spark/wild2.mp4', 'images/research/spark/robot_demo.mp4'], 'In-the-wild photos, and the asset driven in a robot manipulation scene.'] ],
+    points: [
+      '<b>Stage 1, VLM guidance.</b> A vision-language model reads the image and proposes the coarse structure: category, number of parts, parent/child graph, an initial joint type per part, and a per-part reference image.',
+      '<b>Stage 2, part-level reconstruction.</b> A diffusion transformer generates part meshes and the complete shape together. DINOv2 features from the global image and from each part image feed local, global and hierarchy attention, so parts stay consistent and do not over-segment.',
+      '<b>Stage 3, URDF optimization.</b> The VLM renders an "opened" state; differentiable forward kinematics plus differentiable rendering refine joint type, axis and origin until the asset reproduces it.',
+      'Outputs load directly into simulators and have been used for robotic manipulation and interaction modeling.',
+    ],
+    talking: [
+      '<b>Why URDF?</b> It is the lingua franca of simulators and robot stacks; predicting it directly is what makes the asset sim-ready.',
+      '<b>Versus Articulate-Anything / Articulate AnyMesh:</b> they retrieve or segment existing assets; SPARK generates geometry and kinematics jointly and refines kinematics against evidence instead of trusting the VLM prior.',
+      '<b>Hardest part:</b> joint axes and origins. Small errors give visibly wrong motion, which is why Stage 3 exists and why ArticulateArena followed.',
+      '<b>Stated limitations:</b> one object at a time, VLM dependence, and an evaluation protocol we knew was flawed. Each became a follow-up.',
+    ],
+    links: [ ['Project page', 'https://heyumeng.com/SPARK-web/'], ['arXiv', 'https://arxiv.org/abs/2512.01629'], ['Code', 'https://github.com/YumengHe/SPARK/'], ['Paper', 'https://openaccess.thecvf.com/content/CVPR2026/html/He_SPARK_Sim-ready_Part-level_Articulated_Reconstruction_with_VLM_Knowledge_CVPR_2026_paper.html'] ] },
+
+  { id: 'vorolight', date: '2025-12', stage: 'build', highlight: false,
+    title: 'VoroLight: Learning Voronoi Surface Meshes via Sphere Intersection',
+    short: 'VoroLight', venue: 'arXiv 2025', year: 2025, kind: 'Paper',
+    authors: 'Jiayin Lu*, Ying Jiang*, Yumeng He*, Yin Yang, Chenfanfu Jiang (* equal contribution)',
+    role: 'Co-first author.',
+    blurb: 'Learning Voronoi surface and volume meshes via sphere intersection, from meshes, point clouds or images.',
+    figures: [ ['images/vorolight2.png', ''] ],
+    points: [ 'A learned Voronoi meshing approach: surface meshes emerge from sphere intersections, giving simulation-friendly geometry from general inputs.',
+              'Fits the "representation" question: a simulator-ready mesh is the bridge between reconstruction and physics.' ],
+    talking: [],
+    links: [ ['Project page', 'https://jiayinlu19960224.github.io/vorolight/'], ['arXiv', 'https://arxiv.org/abs/2512.12984'] ] },
+
+  { id: 'painting', date: '2025-11', stage: 'build', highlight: false,
+    title: 'Birth of a Painting: Differentiable Brushstroke Reconstruction',
+    short: 'Birth of a Painting', venue: 'TOG / SIGGRAPH 2026', year: 2026, kind: 'Paper',
+    authors: 'Ying Jiang*, Jiayin Lu*, Yunuo Chen*, Yumeng He, Kui Wu, Yin Yang, Chenfanfu Jiang',
+    role: 'Co-author. Conditionally accepted to ACM TOG (SIGGRAPH 2026).',
+    blurb: 'Reconstruct the painting process, stroke by stroke, from a finished artwork.',
+    figures: [ ['images/painting.png', ''] ],
+    points: [ 'Differentiable brushstrokes let us recover an ordered stroke sequence that reproduces a finished painting.',
+              'Same philosophy as SPARK: recover the process or structure behind an observation, not just its appearance.' ],
+    talking: [],
+    links: [ ['Project page', 'https://yingjiang96.github.io/DiffPaintWebsite/'], ['arXiv', 'https://arxiv.org/abs/2511.13191'] ] },
+
+  /* ---------------- VERIFY ---------------- */
+  { id: 'arena', date: '2026-09', stage: 'build', highlight: true, feature: true,
+    title: 'ArticulateArena: A Metric for Articulated Kinematics',
+    short: 'ArticulateArena', venue: 'arXiv 2026', year: 2026, kind: 'Paper',
+    authors: 'Yumeng He, Yongfei She, Huanyu Chen, Chun Yuan, Peihao Li, Joseph Masterjohn, Yin Yang, Ying Jiang, Chenfanfu Jiang',
+    role: 'First author and project lead.',
+    blurb: 'One true metric for one-DOF joints whose value is the RMS displacement of the moving link, in meters.',
+    figures: [ ['images/ArticulateArena.png', ''] ],
+    points: [
+      'The standard template (axis error, pivot error, categorical type error, limit error) grades the representation rather than the motion: the pivot term divides by the cross product of the two axes and diverges as predictions become accurate; the type error is discontinuous across physically continuous boundaries; a flipped axis with renamed limits scores maximally against itself.',
+      'We propose the quotient distance between the unordered pair of Lie-algebra endpoint twists of two joints. It is a true metric and unifies fixed, revolute, prismatic and helical joints; unbounded joints are limit points of a radial compactification.',
+      'Under the kinetic-energy inner product of the moving link it equals the RMS physical displacement of that link’s material, so the score is a motion discrepancy in meters.',
+      'Lifted to full kinematic trees with geometry, with proofs of the metric axioms and equivalence to swept-motion discrepancy; published methods are re-evaluated on PartNet-Mobility.',
+    ],
+    talking: [
+      'Origin story: item 4 on the SPARK "next steps" slide was "benchmark for kinematic objects". The metric came first because the existing one could not be trusted.',
+      'Why a metric paper matters for a graphics / robotics audience: leaderboards decide what methods get built.',
+    ],
+    links: [ ['Project page', 'https://heyumeng.com/ArticulateArena-web/'], ['arXiv', 'https://arxiv.org/abs/2609.33931'] ] },
+
+  /* ---------------- SCALE ---------------- */
+  { id: 'sparkplus', date: '2026-10', stage: 'build', highlight: true, ongoing: true,
+    title: 'SPARK+: Agentic Articulated Object Generation',
+    short: 'SPARK+', venue: 'Ongoing', year: 2026, kind: 'Ongoing',
+    authors: 'UCLA AIVC Lab', role: 'Project lead.',
+    blurb: 'From one-shot reconstruction to an agent that proposes, builds, tests and fixes articulated objects.',
+    figures: [],
+    points: [ 'SPARK reconstructs one articulated object from one image in a single pass; SPARK+ turns that into an agentic loop: a VLM-driven agent proposes parts and joints, assembles the asset, runs it in simulation, and revises what fails.',
+              'Generation rather than reconstruction: the target can be a text prompt or a sketch, not only a photo, and the agent can explore several kinematic hypotheses for the same object.',
+              'ArticulateArena closes the loop as the critic: motion is scored in meters, so the agent gets a physically meaningful signal rather than a visual one.' ],
+    talking: [ 'Why agentic: the hard failures in SPARK were never the mesh, they were joint type, axis and limit choices that a single forward pass cannot recover from. An agent that can simulate and retry can.',
+               'Status: in progress; the current focus is the propose / verify / repair loop and the interface between the agent and the simulator.' ],
+    links: [] },
+
+  { id: 'fishbone', date: '2026-05', stage: 'build', highlight: true, feature: true,
+    title: 'Fishbone: From One 3D Asset to a Million Controllable Edits',
+    short: 'Fishbone', venue: 'arXiv 2026', year: 2026, kind: 'Paper',
+    authors: 'Yumeng He, Xiaoying Wang, Peihao Li, Yanjia Huang, Joe Masterjohn, Jiajun Wu, Leonidas Guibas, Yin Yang, Ying Jiang, Chenfanfu Jiang',
+    role: 'First author and project lead.',
+    blurb: 'A rib-and-spine handle extracted automatically from any mesh, driving diverse, simulation-ready deformations.',
+    figures: [ ['images/research/Fishbone_teaser.png', ''],
+               ['images/research/Fishbone_pipeline.png', 'Rib extraction, spine construction and skinning weights are all derived from the mesh with no manual annotation.'] ],
+    points: [
+      'Ribs are cross-sectional iso-contours at successive geodesic levels (heat method); a smooth spine is threaded through their centers with a robust center-finding procedure. No rigging, templates or annotation.',
+      'Six rib-driven and three spine-driven deformation primitives, all low-dimensional, propagate to vertices through Gaussian-weighted skinning that preserves local detail.',
+      'The same handle system is simulation-ready and real-time: lumped mass and damping come from the precomputed skinning weights, and user input projects back to the reduced spine through the same matrix that lifts spine motion to the mesh.',
+      'More deformation diversity and geometric plausibility than cage-based, skeleton-driven and neural baselines; supports batch processing of asset libraries and sim-to-real diversification for robotics.',
+    ],
+    talking: [ 'This is the "object-wise" half of the next-steps slide from my SPARK talk.' ],
+    links: [ ['Project page', 'https://heyumeng.com/Fishbone-web/'], ['arXiv', 'https://arxiv.org/abs/2605.24805'] ] },
+
+
+  /* ---------------- SIMULATE ---------------- */
+  { id: 'vcshell', date: '2026-03', stage: 'simulate', highlight: false, feature: true,
+    title: 'Beyond Kirchhoff–Love: A Volumetric Approach to Thin-Shell Mechanics',
+    short: 'VC Shells (thesis)', venue: 'TOG / SIGGRAPH Asia 2026', year: 2026, kind: 'Paper',
+    authors: 'Huanyu Chen, Yumeng He, Jernej Barbič',
+    role: 'Second author; the work grew out of my USC master’s thesis "From Kirchhoff-Love Shells to Volumetrically Consistent Shells" (committee: Barbič, Jiang, Slocum).',
+    blurb: 'Drop the Kirchhoff–Love assumption so thin shells preserve volume and reproduce Poisson effects.',
+    figures: [ ['images/VCShell2.png', ''], ['images/VCShell.png', 'Thesis figure.'] ],
+    points: [
+      'Kirchhoff–Love shells assume the normal stays normal to the mid-surface and keeps unit length. That is exactly what prevents them from preserving volume, reporting a correct thickness, or reproducing Poisson effects.',
+      'We allow thickness-direction warping, parameterized by a small number of modal functions, and write the shell energy as stretching + bending + a density-gradient term.',
+      'The result behaves like the volumetric solid it approximates while keeping the cost of a shell.',
+    ],
+    talking: [ 'This is the project where I went from a continuum-mechanics derivation to a working solver end to end, which is the skill I use when debugging any simulator.' ],
+    links: [ ['Thesis', 'https://digitallibrary.usc.edu/asset-management/2A3BF1M2S8NKE?FR_=1&W=1440&H=812'] ] },
+
+  { id: 'vabd', date: '2026-08', stage: 'simulate', highlight: false,
+    title: 'Vibrational Affine Body Dynamics',
+    short: 'VABD', venue: 'TOG / SIGGRAPH Asia 2026', year: 2026, kind: 'Paper',
+    authors: 'Haoyang Shi, Yumeng He, Sheldon Andrews, Chenfanfu Jiang, Kui Wu, Yin Yang',
+    role: 'Second author.',
+    blurb: 'Affine body dynamics extended with vibrational modes.',
+    figures: [ ['images/VABD.png', ''] ],
+    points: [ 'Extends affine body dynamics so that near-rigid objects also carry vibration, keeping the efficiency of ABD while recovering the missing dynamics.' ],
+    talking: [], links: [] },
+
+  { id: 'fluid', date: '2025-04', stage: 'simulate', highlight: false,
+    title: 'Incompressible Fluid Simulation: A Comparison',
+    short: 'Fluid solvers', venue: 'USC CSCI 580', year: 2025, kind: 'Project',
+    authors: 'Course project, C++ / OpenGL', role: 'Solo.',
+    blurb: 'Stable Fluids, SPH, PIC, PIC/FLIP and APIC implemented and benchmarked on identical scenes.',
+    figures: [ ['projects/CSCI580/CSCI580.gif', ''] ],
+    points: [ 'Four families of 2D incompressible solvers implemented from scratch and compared for accuracy versus performance.' ],
+    talking: [], links: [ ['Code', 'https://github.com/YumengHe/Fluid-Simulation'], ['Report', 'projects/CSCI580/report.pdf'], ['Slides', 'projects/CSCI580/slides.pdf'] ] },
+
+  { id: 'jello', date: '2025-02', stage: 'simulate', highlight: false,
+    title: 'Simulating a Jello Cube',
+    short: 'Jello cube', venue: 'USC CSCI 520', year: 2025, kind: 'Project',
+    authors: 'Course project, C++', role: 'Solo.',
+    blurb: 'Mass-spring soft body with structural, shear and bend springs, plus a simplified IPC solver.',
+    figures: [ ['projects/CSCI520/CSCI520A1.jpg', ''] ],
+    points: [ 'Penalty-based collision against boundaries and obstacles; Euler, RK4 and implicit integrators.',
+              'Additionally implemented a simplified Incremental Potential Contact method with line search and a Newton solver, following the Physics-Based Simulation tutorial (Li, Jiang et al.).' ],
+    talking: [], links: [ ['Code', 'https://github.com/YumengHe/Simulating-a-Jello-Cube'], ['Demo', 'https://youtu.be/eozCOgNBC7s'] ] },
+
+  { id: 'anim', date: '2025-03', stage: 'simulate', highlight: false,
+    title: 'Character animation: IK with skinning, motion-capture interpolation',
+    short: 'IK & mocap', venue: 'USC CSCI 520', year: 2025, kind: 'Project',
+    authors: 'Course projects, C++', role: 'Solo.',
+    blurb: 'Forward / inverse kinematics with skinning; Euler and quaternion mocap interpolation.',
+    figures: [ ['projects/CSCI520/CSCI520A3.gif', 'Inverse kinematics with skinning.'], ['projects/CSCI520/CSCI520A2.gif', 'Motion-capture interpolation.'] ],
+    points: [ 'FK / IK and skinning to deform an OBJ character.',
+              'Four interpolation schemes (linear and Bézier, Euler and quaternion) for ASF/AMC mocap, mitigating gimbal lock and interpolation artifacts.' ],
+    talking: [], links: [ ['IK code', 'https://github.com/YumengHe/Inverse-Kinematics-with-Skinning'], ['Mocap code', 'https://github.com/YumengHe/Motion-Capture-Interpolation'] ] },
+
+  { id: 'render', date: '2024-10', stage: 'simulate', highlight: false,
+    title: 'Rendering fundamentals: ray tracer, spline roller coaster, shader height fields',
+    short: 'Rendering basics', venue: 'USC CSCI 420', year: 2024, kind: 'Project',
+    authors: 'Course projects, C++ / OpenGL / GLSL', role: 'Solo.',
+    blurb: 'A ray tracer with lighting and shadows, Catmull-Rom roller coaster, shader-based terrain.',
+    figures: [ ['images/CSCI420-A3.png', ''] ],
+    points: [ 'Ray tracer handling opaque surfaces with lighting and shadows; Catmull-Rom splines with core-profile shading and texturing; height-field terrain in GLSL.' ],
+    talking: [], links: [ ['Ray tracing', 'https://github.com/YumengHe/CSCI420-Programming-Assignment-3-Ray-tracing'], ['Roller coaster', 'https://github.com/YumengHe/CSCI420-Programming-Assignment-2-Simulating-a-Roller-Coaster'], ['Height fields', 'https://github.com/YumengHe/CSCI420-Programming-Assignment-1-Height-Fields-Using-Shaders'] ] },
+
+  /* ---------------- ACT ---------------- */
+  { id: 'mpc', date: '2025-08', stage: 'act', highlight: false, feature: false,
+    title: 'MPC Is All You Need',
+    short: 'MPC Is All You Need', venue: 'USC RESL, 2025', year: 2025, kind: 'Paper',
+    authors: 'USC RESL, supervised by Prof. Gaurav S. Sukhatme and Dr. Jeremy Morgan',
+    role: 'Research assistant; co-presented as an invited talk at the USC SLURM Lab (Aug 2025).',
+    blurb: 'Few-shot manipulation that uses Model Predictive Control to recover material parameters for a physically accurate simulation.',
+    figures: [ ['images/research/MPC_slide.png', 'From the talk co-presented at the USC SLURM Lab (Aug 2025): Grounded-Segment-Anything masks on the real scene.'] ],
+    points: [
+      'Goal: make the simulated object behave like the real one after only a few real interactions, by optimizing material parameters inside an MPC loop.',
+      'Real-to-sim front end: RGB and depth in, Grounded SAM for masks, segmented point clouds, a generated mesh (Meshy / TRELLIS), and ICP to recover position, scale and orientation so the twin lands where the real object is.',
+      'This project is why material parameters, what governs how an object moves, became part of my research agenda.',
+    ],
+    talking: [],
+    links: [ ['Talk slides (PDF)', 'files/MPC is all you need.pdf'] ] },
+
+  { id: 'vla', date: '2025-10', stage: 'act', highlight: false,
+    title: 'VLA with better number representation',
+    short: 'VLA action heads', venue: 'USC CSCI 699', year: 2025, kind: 'Project',
+    authors: 'Course project, Robotic Perception', role: 'Team project.',
+    blurb: 'Replace OpenVLA-OFT’s 256-bin action tokenizer with lightweight continuous, non-autoregressive heads.',
+    figures: [ ['projects/CSCI699/pipeline.png', ''] ],
+    points: [ 'Studies continuous alternatives to discretized action tokens on top of OpenVLA-OFT.' ],
+    talking: [], links: [ ['Proposal', 'projects/CSCI699/project_proposal.pdf'], ['Final report', 'projects/CSCI699/final_report.pdf'] ] },
+
+  { id: 'stringart', date: '2026-09', stage: 'act', highlight: false,
+    title: 'One Spool at a Time: Fabricable Multicolor String Art',
+    short: 'String art', venue: 'SIGGRAPH Asia Poster 2026', year: 2026, kind: 'Paper',
+    authors: 'Qiyang Chen, Yumeng He, Jiayin Lu, Yin Yang, Ying Jiang, Chenfanfu Jiang',
+    role: 'Second author.',
+    blurb: 'Computational design that comes back to the physical world as a fabricable artifact.',
+    figures: [ ['images/stringart.png', ''] ],
+    points: [ 'Multicolor string art generated so that it can actually be wound one spool at a time.' ],
+    talking: [], links: [] },
+];
+
+const STAGE_NAME = { see: 'See', build: 'Build', simulate: 'Simulate', act: 'Act' };
+const STAGE_SIDE = { see: 'real', build: 'sim', simulate: 'sim', act: 'real' };
+// follow-up relations drawn as arrows on the map (from -> to); edit this list to add or remove arrows
+const FOLLOWUPS = [
+  ['spark', 'arena'],      // ArticulateArena benchmarks the motion of SPARK-style generated objects
+  ['spark', 'sparkplus'],  // SPARK+ is the agentic successor to SPARK
+];
+const byId = Object.fromEntries(PROJECTS.map(p => [p.id, p]));
+let curP = null;
+function blkClick(e, id){
+  if (document.body.classList.contains('grid')) return;   // in the overview grid a click selects the slide
+  e.stopPropagation();                                      // otherwise the stage click would advance the deck
+  openProject(id);
+}
+function openProject(id){
+  const p = byId[id]; if (!p) return;
+  curP = id;
+  const st = STAGE_NAME[p.stage] || '';
+  const tags = [
+    `<span class="tag ${p.kind === 'Paper' ? '' : 'grey'}">${p.kind}</span>`,
+    p.venue !== p.kind ? `<span class="tag">${p.venue}</span>` : '',   // no 'Ongoing · Ongoing'
+    p.highlight ? '<span class="tag gold">★ Selected work</span>' : '',
+    ...(p.badges || []).map(b => `<span class="tag gold">${b}</span>`),
+    ...FOLLOWUPS.filter(f => f[1] === id && byId[f[0]]).map(f => `<span class="tag">&#8627; follow-up of ${byId[f[0]].short || byId[f[0]].title}</span>`),
+    st ? `<span class="tag ${STAGE_SIDE[p.stage] === 'real' ? 'real' : ''}">${st}</span>` : '',
+  ].join('');
+  document.getElementById('pmHd').innerHTML = `<div class="tags">${tags}</div><h3>${p.title}</h3><div class="au">${p.authors}</div><p class="role"><b>My role:</b> ${p.role}</p>`;
+  const media = src => /\.(mp4|webm)$/i.test(src) ? `<video src="${src}" autoplay muted loop playsinline></video>` : `<img src="${src}" alt="" loading="lazy">`;
+  // figure entry: [src | [srcs], caption, placement?, heading?]; a heading starts a new titled section (Pipeline, Dataset, Results ...)
+  const fig = f => { const srcs = Array.isArray(f[0]) ? f[0] : [f[0]]; const m = srcs.map(media).join(''); return `${f[3] ? `<h5 class="fh">${f[3]}</h5>` : ''}<figure>${srcs.length > 1 ? `<div class="row">${m}</div>` : m}${f[1] ? `<figcaption>${f[1]}</figcaption>` : ''}</figure>`; };
+  // a figure's optional 3rd field places it: 'wide' = full width above the text, 'bottom' = full width below; default = left column
+  const top = p.figures.filter(f => f[2] === 'wide').map(fig).join('');
+  const bottom = p.figures.filter(f => f[2] === 'bottom').map(fig).join('');
+  const figs = p.figures.filter(f => !f[2]).map(fig).join('');
+  const talk = p.talking.length ? `<h5>Talking points</h5><ul>${p.talking.map(t => `<li>${t}</li>`).join('')}</ul>` : '';
+  const links = p.links.length ? `<div class="plinks">${p.links.map(l => `<a href="${l[1]}" target="_blank" rel="noopener">${l[0]}</a>`).join('')}</div>` : '';
+  const bd = document.getElementById('pmBd');
+  bd.innerHTML = `${figs ? `<div>${figs}</div>` : ''}<div><h5>What it is</h5><ul>${p.points.map(t => `<li>${t}</li>`).join('')}</ul>${talk}${links}</div>`;
+  bd.classList.toggle('one', !figs);
+  document.getElementById('pmTop').innerHTML = top; document.getElementById('pmBottom').innerHTML = bottom;
+  document.getElementById('pmBottom').style.display = bottom ? '' : 'none';
+  const pm = document.getElementById('pm'); pm.classList.add('open'); pm.querySelector('.box').scrollTop = 0;
+}
+function closeProject(){ const pm = document.getElementById('pm'); pm.classList.remove('open'); pm.querySelectorAll('video').forEach(v => v.pause()); curP = null; }
+// arrows between follow-up projects on the map: positions are measured from the blocks, so they survive layout tweaks
+function drawArrows(){
+  const svg = document.querySelector('.arrows'); if (!svg) return;
+  const sec = svg.closest('.slide'); const sr = sec.getBoundingClientRect(); if (!sr.width) return;
+  const k = 960 / sr.width;                                  // undo the deck's fit() scale
+  const box = el => { const r = el.getBoundingClientRect(); return { l: (r.left - sr.left) * k, t: (r.top - sr.top) * k, w: r.width * k, h: r.height * k }; };
+  let out = '';
+  for (const [a, b] of FOLLOWUPS) {
+    const ea = sec.querySelector(`.blk[data-p="${a}"]`), eb = sec.querySelector(`.blk[data-p="${b}"]`); if (!ea || !eb) continue;
+    const A = box(ea), B = box(eb);
+    const acx = A.l + A.w / 2, acy = A.t + A.h / 2, bcx = B.l + B.w / 2, bcy = B.t + B.h / 2;
+    // the arrow lives in the gap between the two borders: it never crosses a block
+    let x1, y1, x2, y2;
+    if (Math.abs(bcx - acx) > Math.abs(bcy - acy)) {        // side by side
+      const dir = bcx > acx ? 1 : -1;
+      x1 = dir > 0 ? A.l + A.w : A.l; x2 = dir > 0 ? B.l : B.l + B.w;
+      y1 = y2 = (acy + bcy) / 2;
+    } else {                                                 // stacked
+      const dir = bcy > acy ? 1 : -1;
+      y1 = dir > 0 ? A.t + A.h : A.t; y2 = dir > 0 ? B.t : B.t + B.h;
+      x1 = x2 = (acx + bcx) / 2;
+    }
+    const len = Math.hypot(x2 - x1, y2 - y1);
+    const HEAD = Math.min(5.5, len * 0.35);                   // half-width of the head; shrinks for tight gaps
+    const ang = Math.atan2(y2 - y1, x2 - x1), ux = Math.cos(ang), uy = Math.sin(ang);
+    const bx = x2 - ux * HEAD * 1.7, by = y2 - uy * HEAD * 1.7;
+    const head = `${x2},${y2} ${bx - uy * HEAD},${by + ux * HEAD} ${bx + uy * HEAD},${by - ux * HEAD}`;
+    const d = `M${x1},${y1}L${bx + ux * 0.5},${by + uy * 0.5}`;
+    const halo = len > 40 ? `<path class="halo" d="${d}"/>` : '';   // only long arrows (non-adjacent blocks) need a halo
+    out += `${halo}<path class="ln" d="${d}"/><polygon class="hd" points="${head}"/>`;
+  }
+  svg.innerHTML = out;
+}
+addEventListener('load', () => { drawArrows(); requestAnimationFrame(drawArrows); });
+addEventListener('resize', drawArrows);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawArrows);
+// coursework projects (.blk.early) are hidden by default; the button on the map reveals them
+function setEarly(show){
+  const sec = document.querySelector('section[data-i="map"]'); if (!sec) return;
+  sec.classList.toggle('more', show);
+  const n = sec.querySelectorAll('.blk.early').length;
+  const btn = document.getElementById('moreBtn');
+  if (btn) btn.textContent = show ? '\u2212 Hide course projects' : `+ Show course projects (${n})`;
+  requestAnimationFrame(drawArrows);
+}
+function toggleEarly(e){
+  if (document.body.classList.contains('grid')) return;
+  e.stopPropagation();
+  setEarly(!document.querySelector('section[data-i="map"]').classList.contains('more'));
+}
+if (new URLSearchParams(location.search).has('all')) setEarly(true);
+// while the overlay is open, keys belong to it, not to the deck (capture phase runs before the deck's handler)
+document.addEventListener('keydown', e => {
+  if (!curP) return;
+  if (e.key === 'Escape') closeProject();
+  else if (['ArrowRight', 'ArrowLeft', ' ', 'Enter'].includes(e.key)) { /* swallow: do not advance the deck behind the overlay */ }
+  else return;
+  e.preventDefault(); e.stopImmediatePropagation();
+}, true);
+// deep link: research.html#4?p=spark is awkward with the deck's hash, so use ?p=spark
+const _pp = new URLSearchParams(location.search).get('p');
+if (_pp && byId[_pp]) setTimeout(() => openProject(_pp), 50);
+</script>
+
+<script>
+const NOTES = [
+"Hi, I'm Yumeng He, a first-year PhD student at the UCLA AIVC Lab, co-advised by Chenfanfu Jiang and Demetri Terzopoulos. The one-line version of my research is real to sim to real: I build the pieces that let a robot learn from the real world through simulation and come back. I'll go through where I come from, the questions I care about, and then one loop with my projects placed on it.",
+"Quick background, newest first. I'm a first-year PhD student at UCLA in the AIVC Lab, co-advised by Chenfanfu Jiang and Demetri Terzopoulos, and also a research intern at Envora. Before that, a thesis-track master's at USC with Jernej Barbič on thin shells, while also working at USC RESL on robotic manipulation and, from June 2025, as a visiting student at UCLA where most of the work I'll show was done. And before that, math and computer science at Toronto, which is the analysis and linear-algebra foundation I still use for simulation and geometry.",
+"My interests sit at the intersection of vision, graphics and robotics, what people now call physical AI. The motivation is simple: robot learning is limited by data that is scarce and physically inaccurate. Everything I do sits on one loop, real world into simulation and back, and I'll use the same four stages on the next slide. Stage one, See: real-to-sim perception, getting a real object into the simulator with its geometry intact. Stage two, Build: two threads, generating physically plausible objects and scenes, and articulated, kinematic assets, which for me means parts plus joints. Stage three, Simulate: physics-based simulation, especially shells and soft bodies. Stage four, Act: policy learning on top of all that, back on hardware. The next slide puts every project on this same line.",
+"Here is the whole map. Left to right is the loop, real world into simulation and back. Every project I've worked on is a block standing on the stage it belongs to; starred ones are the selected works I will go deeper on, the ones I lead. Stage one, See: perception, with SeeClear as the lead project. Stage two, Build: SPARK turns one image into a sim-ready articulated asset, ArticulateArena measures whether its motion is right, SPARK+ is the in-progress successor that makes generation agentic, and Fishbone scales one asset into thousands. Stage three, Simulate: my master's thesis on thin shells, VABD, and the solvers I built in coursework. Stage four, Act: back to hardware with MPC Is All You Need. I'll go deeper on the starred ones. Any block can be clicked for details.",
+"What's next. The through-line is object to benchmark to policy. ★ Physics-grounded, controllable generation, including 3D-guided video. ★ Benchmarks that measure motion rather than representation, growing ArticulateArena into a full suite. ★ And closing the loop: training policies on SPARK and Fishbone assets and checking that asset quality actually transfers to the real robot."
+];
+
+const deck = document.getElementById('deck'), stage = document.getElementById('stage');
+const slides = [...deck.querySelectorAll('.slide')], N = slides.length;
+let cur = -1;
+const store = { get(k){try{return localStorage.getItem(k)}catch(e){return null}}, set(k,v){try{localStorage.setItem(k,v)}catch(e){}} };
+
+function fit(){
+  const r = stage.getBoundingClientRect();
+  const s = Math.min(r.width / 960, r.height / 540) * (document.body.classList.contains('fs') ? 1 : 0.96);
+  deck.style.transform = `scale(${s})`;
+}
+let step = 0;
+const maxStep = s => +s.dataset.steps || 0;
+// reveal every element whose step <= k; `animate` false shows them instantly
+function show(slide, k, animate){
+  slide.querySelectorAll('[data-s]').forEach(el => {
+    const s = +el.dataset.s, was = el.classList.contains('in');
+    if (s <= k) {
+      if (!was) {
+        el.classList.add('in'); el.classList.toggle('instant', !animate);
+        if (el.dataset.count !== undefined) countUp(el, animate);
+      }
+    } else el.classList.remove('in', 'instant');
+  });
+  // elements with data-o fade out once step k reaches their out-step
+  slide.querySelectorAll('[data-o]').forEach(el => {
+    if (k >= +el.dataset.o) {
+      if (!el.classList.contains('gone')) { el.classList.add('gone'); el.classList.toggle('gone-now', !animate); }
+    } else el.classList.remove('gone', 'gone-now');
+  });
+}
+// Keynote-style magic move: elements sharing a data-mm key glide from their old slide position to the new one
+function magicMove(from, to){
+  if (!from || from === to || noMotion()) return () => {};
+  const scale = deck.getBoundingClientRect().width / 960, old = {};
+  const visible = e => getComputedStyle(e).visibility !== 'hidden' && !e.classList.contains('gone');
+  from.querySelectorAll('[data-mm]').forEach(e => { if (visible(e)) old[e.dataset.mm] = e.getBoundingClientRect(); });
+  return () => to.querySelectorAll('[data-mm]').forEach(e => {
+    const a = old[e.dataset.mm];
+    if (!a || !visible(e)) return;
+    const b = e.getBoundingClientRect();
+    if (!b.width || !b.height) return;
+    const dx = (a.left - b.left) / scale, dy = (a.top - b.top) / scale, sx = a.width / b.width, sy = a.height / b.height;
+    if (Math.abs(dx) < .5 && Math.abs(dy) < .5 && Math.abs(sx - 1) < .01 && Math.abs(sy - 1) < .01) return;
+    e.animate([{transform: `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`, transformOrigin: '0 0'},
+               {transform: 'none', transformOrigin: '0 0'}], {duration: 700, easing: 'cubic-bezier(.3, .7, .2, 1)'});
+  });
+}
+function go(i, atEnd){
+  i = Math.max(0, Math.min(N - 1, i));
+  const changed = i !== cur || !slides[i].classList.contains('on');
+  const glide = changed && cur >= 0 ? magicMove(slides[cur], slides[i]) : () => {};
+  cur = i;
+  if (changed) {
+    slides.forEach((s, k) => s.classList.toggle('on', k === cur));
+    slides[cur].querySelectorAll('[data-s]').forEach(el => el.classList.remove('in', 'instant'));
+    slides[cur].querySelectorAll('[data-o]').forEach(el => el.classList.remove('gone', 'gone-now'));
+    step = atEnd ? maxStep(slides[cur]) : 0;
+    show(slides[cur], step, false);  // page turns are instant; only key-press steps animate
+    glide();
+  }
+  if (atEnd && !changed) { step = maxStep(slides[cur]); show(slides[cur], step, false); }
+  if (atEnd) slides[cur].querySelectorAll('[data-s]').forEach(el => el.classList.add('instant'));
+  update();
+}
+function next(){
+  if (step < maxStep(slides[cur])) { step++; show(slides[cur], step, true); update(); }
+  else if (cur < N - 1) go(cur + 1);
+}
+function prev(){
+  if (step > 0) { step--; show(slides[cur], step, false); update(); }
+  else if (cur > 0) go(cur - 1, true);
+}
+function update(){
+  const m = maxStep(slides[cur]);
+  document.getElementById('count').textContent = `${cur + 1} / ${N}`;
+  document.getElementById('steps').innerHTML = m ? Array.from({length: m}, (_, k) => `<i class="${k < step ? 'on' : ''}"></i>`).join('') : '';
+  document.querySelector('#prog i').style.width = `${(cur + (m ? step / m : 1)) / N * 100}%`;
+  const nt = document.getElementById('notesText'), newSlide = cur !== update.lastSlide;
+  if (newSlide) {
+    // ★ marks a click: segment k is what to say after the k-th click on this slide
+    const esc = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    nt.innerHTML = (NOTES[cur] || '').split('★').map((t, k) =>
+      (k ? `<b class="star" data-k="${k}">★${k}</b>` : '') + `<span class="seg" data-k="${k}">${esc(t.trim())}</span> `).join('');
+    document.getElementById('notes').scrollTop = 0;   // new slide: notes start at the top
+    update.lastSlide = cur;
+  }
+  nt.querySelectorAll('[data-k]').forEach(e => {
+    const k = +e.dataset.k;
+    e.classList.toggle('past', k < step); e.classList.toggle('cur', k === step); e.classList.toggle('future', k > step);
+  });
+  const curSeg = nt.querySelector('.seg.cur');
+  if (!newSlide && curSeg && curSeg.scrollIntoView) curSeg.scrollIntoView({block: 'nearest', behavior: 'smooth'});
+  history.replaceState(null, '', '#' + (cur + 1));
+  renderPresenter();
+  send();
+  document.querySelectorAll('.thumb').forEach((t, k) => t.classList.toggle('cur', k === cur));
+}
+// count-up numbers (e.g. 65,536 / 4.0×), started after the element's own delay
+const noMotion = () => document.body.classList.contains('noanim') || matchMedia('(prefers-reduced-motion: reduce)').matches;
+function countUp(el, animate){
+  const span = [...el.querySelectorAll('span, p')].find(s => /\d/.test(s.textContent) && !s.children.length);
+  if (!span) return;
+  if (!span.dataset.orig) span.dataset.orig = span.textContent;
+  const orig = span.dataset.orig, m = orig.match(/\d[\d,]*(\.\d+)?/);
+  const token = (span._tok = (span._tok || 0) + 1);
+  if (!m || !animate || noMotion()) { span.textContent = orig; return; }
+  const target = parseFloat(m[0].replace(/,/g, '')), dec = m[1] ? m[1].length - 1 : 0;
+  const comma = m[0].includes(','), pre = orig.slice(0, m.index), post = orig.slice(m.index + m[0].length);
+  const fmt = v => { let s = v.toFixed(dec); if (comma) s = Number(s).toLocaleString('en-US', {minimumFractionDigits: dec}); return pre + s + post; };
+  span.textContent = fmt(0);
+  setTimeout(() => {
+    const t0 = performance.now(), dur = 900;
+    const tick = now => {
+      if (span._tok !== token) return;
+      const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 3);
+      span.textContent = p < 1 ? fmt(target * e) : orig;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    setTimeout(() => { if (span._tok === token) span.textContent = orig; }, dur + 200);
+  }, parseFloat(el.dataset.count) * 1000 + 150);
+}
+// ---- presenter view: a second window with notes, synced over postMessage ----
+const PRESENTER = new URLSearchParams(location.search).has('presenter');
+let peer = null, applying = false;
+function target(){ const t = PRESENTER ? window.opener : peer; return t && !t.closed ? t : null; }
+function send(){
+  if (applying) return;
+  const t = target(); if (t) try { t.postMessage({nsa: 'state', i: cur, k: step}, '*'); } catch (e) {}
+}
+function setState(i, k){
+  if (i !== cur) { go(i); if (k > 0) { step = k; show(slides[cur], k, false); update(); } }
+  else if (k !== step) { const anim = k === step + 1; step = k; show(slides[cur], k, anim); update(); }
+}
+window.addEventListener('message', e => {
+  const d = e.data; if (!d || !d.nsa) return;
+  if (!PRESENTER) peer = e.source;
+  if (d.nsa === 'hello') send();
+  if (d.nsa === 'state') { applying = true; setState(d.i, d.k); applying = false; }
+});
+function openPresenter(){
+  // P toggles: inside the presenter window it closes it; in the audience window it opens or closes it
+  if (PRESENTER) { window.close(); return; }
+  if (peer && !peer.closed) { peer.close(); peer = null; toast('Presenter view closed'); return; }
+  const url = location.href.split(/[?#]/)[0] + '?presenter#' + (cur + 1);
+  peer = window.open(url, 'yh-research-presenter', 'width=1280,height=800');
+  if (!peer) {
+    toast('Pop-up blocked. Allow pop-ups for this page (address bar icon, or Safari > Settings > Websites > Pop-up Windows), then press P again', 7000);
+    return;
+  }
+  try { peer.focus(); } catch (e) {}
+  toast(document.fullscreenElement
+    ? 'Presenter view opened in a new window. Exit fullscreen (F) if you cannot see it'
+    : 'Presenter view opened in a new window. Press P again to close it');
+}
+function toast(msg, ms = 3500){
+  let t = document.getElementById('toast');
+  if (!t) { t = document.createElement('div'); t.id = 'toast'; document.body.appendChild(t); }
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), ms);
+}
+function renderPresenter(){
+  if (!PRESENTER) return;
+  const m = maxStep(slides[cur]);
+  document.getElementById('pcount').textContent = `Slide ${cur + 1} / ${N}`;
+  document.getElementById('psteps').textContent = m ? `step ${step} / ${m}` : '';
+  // big "clicks left on this slide" indicator above the notes
+  const left0 = m - step, bar = document.getElementById('pstepbar');
+  document.getElementById('pstepdots').innerHTML = Array.from({length: m}, (_, k) => `<i class="${k < step ? 'done' : ''}"></i>`).join('');
+  document.getElementById('psteptext').innerHTML = left0 > 0
+    ? `${left0} more click${left0 > 1 ? 's' : ''} on this slide<small>step ${step} of ${m}</small>`
+    : (cur < N - 1 ? `Next click → slide ${cur + 2}<small>${m ? 'all steps shown' : 'no animations on this slide'}</small>`
+                   : `Last slide<small>${m ? 'all steps shown' : ''}</small>`);
+  bar.classList.toggle('last', left0 <= 0);
+  const box = document.getElementById('pnextBox'), lab = document.getElementById('pnextLab');
+  box.innerHTML = '';
+  const left = m - step;
+  lab.textContent = left > 0 ? `Next · ${left} more step${left > 1 ? 's' : ''} on this slide, then:` : 'Next slide';
+  if (cur < N - 1) {
+    const f = document.createElement('div'); f.className = 'frame';
+    const c = slides[cur + 1].cloneNode(true); c.classList.remove('on'); f.appendChild(c); box.appendChild(f);
+    requestAnimationFrame(() => { f.style.transform = `scale(${Math.min(box.clientWidth / 960, box.clientHeight / 540)})`; });
+  } else box.innerHTML = '<div class="end">End of presentation</div>';
+}
+function toggleAnim(on){
+  const v = !document.body.classList.toggle('noanim', on === undefined ? undefined : !on);
+  document.getElementById('bAnim').classList.toggle('act', v);
+  store.set('yh-research-anim', v ? '1' : '0');
+}
+function toggle(cls, on){
+  const v = document.body.classList.toggle(cls, on);
+  document.getElementById({notes:'bNotes', grid:'bGrid'}[cls] || 'x')?.classList.toggle('act', v);
+  if (cls === 'notes') store.set('yh-research-notes', v ? '1' : '0');
+  if (cls === 'grid' && v) sizeThumbs();
+  fit();
+}
+function fullscreen(){
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen?.(); else document.exitFullscreen?.();
+}
+document.addEventListener('fullscreenchange', () => { document.body.classList.toggle('fs', !!document.fullscreenElement); fit(); });
+
+// overview grid
+const grid = document.getElementById('grid');
+slides.forEach((s, k) => {
+  const t = document.createElement('div'); t.className = 'thumb';
+  const c = s.cloneNode(true); c.classList.remove('on'); t.appendChild(c);
+  c.querySelectorAll('[id]').forEach(e => e.removeAttribute('id'));
+  const b = document.createElement('b'); b.textContent = k + 1; t.appendChild(b);
+  t.onclick = () => { go(k); toggle('grid', false); };
+  grid.appendChild(t);
+});
+function sizeThumbs(){
+  requestAnimationFrame(() => document.querySelectorAll('.thumb').forEach(t => {
+    t.firstChild.style.transform = `scale(${t.clientWidth / 960})`;
+  }));
+}
+
+document.getElementById('prev').onclick = prev;
+document.getElementById('next').onclick = next;
+document.getElementById('bNotes').onclick = () => toggle('notes');
+document.getElementById('bGrid').onclick = () => toggle('grid');
+document.getElementById('bFs').onclick = fullscreen;
+document.getElementById('bPres').onclick = openPresenter;
+document.getElementById('bAnim').onclick = () => toggleAnim();
+stage.addEventListener('click', e => { const r = stage.getBoundingClientRect(); (e.clientX - r.left < r.width / 3 ? prev : next)(); });
+document.addEventListener('keydown', e => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  const k = e.key;
+  if (e.shiftKey && k === 'ArrowRight') { e.preventDefault(); go(cur + 1, true); return; }
+  if (e.shiftKey && k === 'ArrowLeft') { e.preventDefault(); go(cur - 1, true); return; }
+  if (['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(k)) { e.preventDefault(); next(); }
+  else if (['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(k)) { e.preventDefault(); prev(); }
+  else if (k === 'Home') go(0);
+  else if (k === 'End') go(N - 1, true);
+  else if (k === 'n' || k === 'N') toggle('notes');
+  else if (k === 'g' || k === 'G' || (k === 'Escape' && document.body.classList.contains('grid'))) toggle('grid');
+  else if (k === 'f' || k === 'F') fullscreen();
+  else if (k === 'a' || k === 'A') toggleAnim();
+  else if (k === 'p' || k === 'P') openPresenter();
+});
+let tx = null;
+stage.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive:true});
+stage.addEventListener('touchend', e => { if (tx === null) return; const d = e.changedTouches[0].clientX - tx; if (Math.abs(d) > 40) (d < 0 ? next : prev)(); tx = null; });
+window.addEventListener('resize', () => { fit(); if (document.body.classList.contains('grid')) sizeThumbs(); });
+window.addEventListener('hashchange', () => { const h = parseInt(location.hash.slice(1)); if (h) go(h - 1); });
+
+if (!PRESENTER && store.get('yh-research-notes') === '1') toggle('notes', true);  // N state survives a reload
+if (store.get('yh-research-anim') === '0') toggleAnim(false);
+if (PRESENTER) {
+  document.body.classList.add('presenter');
+  document.title = 'Presenter · ' + document.title;
+  const t0 = {v: Date.now()}, pad = n => String(n).padStart(2, '0');
+  const tick = () => {
+    const s = Math.floor((Date.now() - t0.v) / 1000), d = new Date();
+    document.getElementById('ptimer').textContent = `${pad(Math.floor(s / 60))}:${pad(s % 60)}`;
+    document.getElementById('pclock').textContent = `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  };
+  setInterval(tick, 500); tick();
+  document.getElementById('ptimer').onclick = () => { t0.v = Date.now(); tick(); };
+  let nfs = parseFloat(store.get('yh-research-nfs')) || 22;
+  const setN = v => { nfs = Math.max(14, Math.min(40, v)); document.body.style.setProperty('--nfs', nfs + 'px'); store.set('yh-research-nfs', nfs); };
+  setN(nfs);
+  document.getElementById('pSmaller').onclick = () => setN(nfs - 2);
+  document.getElementById('pBigger').onclick = () => setN(nfs + 2);
+  window.addEventListener('resize', renderPresenter);
+}
+go((parseInt(location.hash.slice(1)) || 1) - 1, new URLSearchParams(location.search).has('all'));
+if (PRESENTER && window.opener) try { window.opener.postMessage({nsa: 'hello'}, '*'); } catch (e) {}
+fit();
+</script>
+</body>
+</html>
