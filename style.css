@@ -31,7 +31,7 @@ p {
     margin-bottom: 10%;
 }
 
-h2 { color: #7469B6; font-weight: bold; margin: 15px 0px 15px; font-size: 157%; line-height: 1.1; }
+h2 { color: #000; font-weight: bold; margin: 15px 0px 15px; font-size: 157%; line-height: 1.1; }
 
 .my-name {
     margin: 6px 0px 6px;
@@ -39,7 +39,7 @@ h2 { color: #7469B6; font-weight: bold; margin: 15px 0px 15px; font-size: 157%; 
 
 a {
     /* color: #7FC7D9; */
-    color: #E1AFD1;
+    color: #AD88C6;
     text-decoration: none;
 }
 
@@ -120,7 +120,7 @@ a:hover {
 }
 
 .project-text-title{
-    color: #AD88C6;
+    color: #000;
     font-weight: bold;
 }
 
