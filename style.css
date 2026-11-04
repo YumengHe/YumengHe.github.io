@@ -33,6 +33,17 @@ p {
 
 h2 { color: #000; font-weight: bold; margin: 15px 0px 15px; font-size: 157%; line-height: 1.1; }
 
+.open-box {
+    margin: 12px 0px;
+    padding: 8px 14px;
+    border-left: 3px solid #AD88C6;
+    background-color: #F7F3FA;
+}
+
+.open-box + .open-box {
+    margin-top: -4px;
+}
+
 .my-name {
     margin: 6px 0px 6px;
 }
